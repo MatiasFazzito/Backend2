@@ -1,7 +1,6 @@
 import { Router } from "express"
 import userModel from "../models/user.model.js"
 
-
 const router = Router()
 
 router.get("/", async (req, res) => {
@@ -11,6 +10,31 @@ router.get("/", async (req, res) => {
     } catch (error) {
         console.error(error)
     }
+})
+
+router.get("/login", async (req, res) => {
+    // Validar usuario por email y password
+    //Generar un JWT con los datos
+    //Almacenar el JWT en una cookie llamada currentUser
+    const { user, password } = req.query
+    if (user !== "coder" || password !== "house") {
+        res.send("Login fallido")
+    } else {
+        req.session.user = user
+        req.session.admin = true
+        res.send("Login OK")
+    }
+})
+
+router.get("/logout", async (req, res) => {
+    req.session.destroy(error => {
+        if (!err) {
+            res.clearCookie("connect.sid")
+            res.send("Logout OK")
+        }
+        else res.send({ status: "Error", body: err })
+
+    })
 })
 
 router.post("/", async (req, res) => {
@@ -29,15 +53,15 @@ router.post("/", async (req, res) => {
 
 router.put("/:uid", async (req, res) => {
     try {
-        const {uid} = req.params
+        const { uid } = req.params
         const userToReplace = req.body
 
-        if (!userToReplace.nombre || !userToReplace. apellido || !userToReplace.email) {
-            res.send({status: "error", error: "faltan parametros"})
+        if (!userToReplace.nombre || !userToReplace.apellido || !userToReplace.email) {
+            res.send({ status: "error", error: "faltan parametros" })
         }
 
-        const result = await userModel.updateOne({_id: uid}, userToReplace)
-        res.send({result: "success", payload: result})
+        const result = await userModel.updateOne({ _id: uid }, userToReplace)
+        res.send({ result: "success", payload: result })
     } catch (error) {
         console.error(error)
     }
@@ -45,10 +69,10 @@ router.put("/:uid", async (req, res) => {
 
 router.delete("/:uid", async (req, res) => {
     try {
-        const {uid} = req.params
-        const result = await userModel.deleteOne({_id: uid})
+        const { uid } = req.params
+        const result = await userModel.deleteOne({ _id: uid })
 
-        res.send({result: "success", payload: result})
+        res.send({ result: "success", payload: result })
     } catch (error) {
         console.error(error)
     }
