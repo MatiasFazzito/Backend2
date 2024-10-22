@@ -6,6 +6,8 @@ import MongoStore from "connect-mongo"
 import cookieParser from "cookie-parser"
 import dotenv from 'dotenv'
 import mongoose from "mongoose"
+import passport from "passport"
+import initializePassport from "./config/passport.config.js"
 import __dirname from "./utils.js"
 import userRouter from "./routes/users.router.js"
 import sessionRouter from "./routes/session.router.js"
@@ -28,17 +30,22 @@ mongoose.connect(URIConection)
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use (cookieParser())
+app.use(cookieParser())
 app.use(session({
     store: MongoStore.create({
         mongoUrl: URIConection,
-        mongoOptions: {},
-        ttl:1000
+        mongoOptions: {
+            serverSelectionTimeoutMS: 30000
+        },
+        ttl: 1000
     }),
     secret: "secretoCoder",
     resave: false,
     saveUninitialized: false
 }))
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.engine("handlebars", handlebars.engine())
 app.set('views', __dirname + '/views')
@@ -46,4 +53,4 @@ app.set('view engine', 'handlebars')
 
 app.use("/", viewsRouter)
 app.use("/api/users", userRouter)
-app.use("/api/session", sessionRouter)
+app.use("/api/sessions", sessionRouter)
