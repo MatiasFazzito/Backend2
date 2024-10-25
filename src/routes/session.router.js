@@ -1,47 +1,67 @@
 import { Router } from "express"
-import userModel from "../models/user.model.js"
-import { createHash } from "../utils.js"
+import { authorization, generateToken, passportCall } from "../utils.js"
 import passport from "passport"
-
 
 const router = Router()
 
-router.post("/register", passport.authenticate("register", { failureRedirect: "/failregister" }), async (req, res) => {
+router.post("/register", passport.authenticate("register", { failureRedirect: "/api/session/failregister" }), async (req, res) => {
     res.redirect("/login")
 })
+
 router.get("/failregister", async (req, res) => {
-    console.log("Failed Strategy");
     res.send({ error: "Failed" })
 })
 
-
-
-/*router.post("/register", async (req, res) => {
-    try {
-        const { firstName, lastName, email, age, password } = req.body
-
-        if (!firstName || !lastName || !email || !age || !password) {
-            return res.status(400).send("Todos los campos son obligatorios")
-        }
-
-        const existingUser = await userModel.findOne({ email })
-        if (existingUser) {
-            return res.status(400).send("El usuario ya está registrado")
-        }
-
-        const user = new userModel({ firstName, lastName, email, age, password: createHash(password), role: "admin" })
-
-        await user.save()
-
-        res.redirect("/login")
-    } catch (error) {
-        res.status(500).send("Error al registrarse")
+router.post("/login", passport.authenticate("login", { failureRedirect: "/faillogin" }), async (req, res) => {
+    if (!req.user) {
+        return res.status(400).send({ status: "error", error: "Invalid credentials" })
     }
-})*/
 
-router.get("/current", async (req, res) => {
-    //Validar usuario logueado y devolver respuesta con los datos
+    const user = req.session.user = {
+        firstName: req.user.firstName,
+        lastName: req.user.lastName,
+        age: req.user.age,
+        email: req.user.email
+    }
 
+    const token = generateToken(user)
+
+    res.cookie("currentUser", token, { maxAge: 60 * 60 * 1000, httpOnly: true })
+
+    res.render("profile", user)
+
+})
+
+router.get("/faillogin", (req, res) => {
+    res.send({ error: "Failed Login" })
+})
+
+router.get("/github", passport.authenticate("github", { scope: ["user:email"] }), async (req, res) => { })
+
+router.get("/githubcallback", passport.authenticate("github", { failureRedirect: "/login" }), async (req, res) => {
+
+    req.session.user = req.user
+
+    const token = generateToken(req.user)
+
+    res.cookie("currentUser", token, { maxAge: 60 * 60 * 1000, httpOnly: true })
+
+    res.send("Estas Logueado con github")
+})
+
+router.get("/current", passportCall("jwt"),authorization("admin"), (req, res) => {
+    res.send(req.user)
+})
+
+router.get("/logout", async (req, res) => {
+    req.session.destroy(error => {
+        if (!error) {
+            res.clearCookie("connect.sid")
+            res.send("Logout OK")
+        }
+        else res.send({ status: "Error", body: err })
+
+    })
 })
 
 export default router

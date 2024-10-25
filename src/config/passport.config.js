@@ -1,10 +1,22 @@
 import passport from "passport"
-import local from "passport-local";
+import local from "passport-local"
 import GitHubStrategy from "passport-github2"
+import jwt from "passport-jwt"
 import userModel from "../models/user.model.js"
-import { createHash, isValidPassword } from "../utils.js";
+import { createHash, isValidPassword } from "../utils.js"
 
 const LocalStrategy = local.Strategy
+const JWTStrategy = jwt.Strategy
+const ExtractJWT = jwt.ExtractJwt
+
+const cookieExtractor = req => {
+    let token = null
+    if (req && req.cookies) {
+        token = req.cookies["currentUser"]
+    }
+    return token
+}
+
 const initializePassport = () => {
 
     passport.use("register", new LocalStrategy(
@@ -17,6 +29,7 @@ const initializePassport = () => {
                     console.log("user already exist")
                     return done(null, false)
                 }
+
                 const newUser = {
                     firstName,
                     lastName,
@@ -24,10 +37,14 @@ const initializePassport = () => {
                     age,
                     password: createHash(password)
                 }
+
                 const result = await userModel.create(newUser)
+
+                generateToken(user)
+
                 return done(null, result)
             } catch (error) {
-                return done("Error al btener usuario: " + error)
+                return done("Error al obtener usuario: " + error)
             }
         }
     ))
@@ -51,7 +68,7 @@ const initializePassport = () => {
     passport.use("github", new GitHubStrategy({
         clientID: "Iv23linzCZ0Y35zrRVL0",
         clientSecret: "dcbed2771f097a48b35963d70dea28a5538895d1",
-        callbackURL: "http://localhost:8080/api/sessions/githubcallback"
+        callbackURL: "http://localhost:8080/api/session/githubcallback"
     }, async (accessToken, refreshToken, profile, done) => {
         try {
             console.log(profile)
@@ -62,7 +79,8 @@ const initializePassport = () => {
                     lastName: "",
                     age: 18,
                     email: profile._json.email,
-                    password: ""
+                    password: "",
+                    role: "admin"
                 }
                 const result = await userModel.create(newUser)
                 done(null, result)
@@ -75,6 +93,19 @@ const initializePassport = () => {
         }
     }
     ))
+
+    passport.use("jwt", new JWTStrategy({
+        jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
+        secretOrKey: "secretoCoder"
+    }, async (jwt_payload, done) => {
+        try {
+            return done(null, jwt_payload)
+        } catch (error) {
+            return done(error)
+        }
+    }
+    ))
+
     passport.serializeUser((user, done) => {
         done(null, user._id)
     })

@@ -1,7 +1,5 @@
 import { Router } from "express"
 import userModel from "../models/user.model.js"
-import { isValidPassword } from "../utils.js"
-import passport from "passport"
 
 const router = Router()
 
@@ -12,23 +10,6 @@ router.get("/", async (req, res) => {
     } catch (error) {
         console.error(error)
     }
-})
-
-router.post("/login", passport.authenticate("login", {failureRedirect:"/faillogin"}), async(req,res)=>{
-    if (!req.user) {
-        return res.status(400).send({status:"error", error: "Invalid credentials"})
-    }
-    req.session.user = {
-        firstName: req.user.firstName,
-        lastName: req.user.lastName,
-        age: req.user.age,
-        email: req.user.email
-    }
-    res.render("profile", user)
-})
-
-router.get("/faillogin", (req,res)=>{
-    res.send({error: "Failed Login"})
 })
 
 /*router.post("/login", async (req, res) => {
@@ -56,20 +37,9 @@ router.get("/faillogin", (req,res)=>{
     } catch (error) {
         res.render("error", error)
     }
-})*/
-
-router.get("/logout", async (req, res) => {
-    req.session.destroy(error => {
-        if (!error) {
-            res.clearCookie("connect.sid")
-            res.send("Logout OK")
-        }
-        else res.send({ status: "Error", body: err })
-
-    })
 })
 
-/*router.post("/", async (req, res) => {
+router.post("/", async (req, res) => {
     try {
         const { nombre, apellido, email } = req.body
         if (!nombre || !apellido || !email) {

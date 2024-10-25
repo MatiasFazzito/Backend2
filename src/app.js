@@ -1,7 +1,6 @@
 import express from "express"
 import handlebars from 'express-handlebars'
 import session from "express-session"
-import FileStore from "session-file-store"
 import MongoStore from "connect-mongo"
 import cookieParser from "cookie-parser"
 import dotenv from 'dotenv'
@@ -15,7 +14,6 @@ import viewsRouter from "./routes/views.router.js"
 
 const app = express()
 dotenv.config()
-const fileStorage = FileStore(session)
 
 const PORT = 8080
 const URIConection = process.env.URIMONGO
@@ -53,4 +51,4 @@ app.set('view engine', 'handlebars')
 
 app.use("/", viewsRouter)
 app.use("/api/users", userRouter)
-app.use("/api/sessions", sessionRouter)
+app.use("/api/session", sessionRouter)
