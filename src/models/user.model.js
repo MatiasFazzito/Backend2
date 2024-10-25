@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     age: { type: Number },
     password: { type: String },
     //cart: String,
-    role: { type: String, default: "user" }
+    role: { type: String, default: "admin" }
 })
 
 const userModel = mongoose.model("users", userSchema)

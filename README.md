@@ -1,1 +1,1 @@
-arreglar el login
+Arreglar el JWT no deja ver el /current

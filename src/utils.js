@@ -32,13 +32,10 @@ export const passportCall = (strategy) => {
     }
 }
 
-export const authorization = (role) =>{
-    return async (req,res,next)=>{
-        if (!req.user) {
-            return res.status(401).send({error: "Unauthorized"})
-        }
+export const authorization = (role) => {
+    return async (req, res, next) => {
         if (req.user.role !== role) {
-            return res.status(403).send({error: "No permission"})
+            return res.status(403).send({ error: "No permission" })
         }
         next()
     }

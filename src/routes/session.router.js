@@ -49,7 +49,10 @@ router.get("/githubcallback", passport.authenticate("github", { failureRedirect:
     res.send("Estas Logueado con github")
 })
 
-router.get("/current", passportCall("jwt"),authorization("admin"), (req, res) => {
+router.get("/current", passportCall("jwt"), authorization("admin"), (req, res) => {
+
+    console.log(req.user)
+
     res.send(req.user)
 })
 
