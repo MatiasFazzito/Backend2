@@ -12,47 +12,6 @@ router.get("/", async (req, res) => {
     }
 })
 
-/*router.post("/login", async (req, res) => {
-    //Generar un JWT con los datos
-    //Almacenar el JWT en una cookie llamada currentUser
-    try {
-        const { email, password } = req.body
-
-        const user = await userModel.findOne({ email })
-
-        if (!isValidPassword(user, password)) {
-            return res.status(403).send({ status: error, error: "incorrect password" })
-        }
-
-        delete user.password
-        req.session.user = user
-        res.render("profile", user)
-
-        //else {
-            //req.session.user = user
-            //req.session.admin = true
-            //res.send("Login OK")
-        //}
-
-    } catch (error) {
-        res.render("error", error)
-    }
-})
-
-router.post("/", async (req, res) => {
-    try {
-        const { nombre, apellido, email } = req.body
-        if (!nombre || !apellido || !email) {
-            res.send({ status: "error", error: "Faltan parametros" })
-        }
-        const result = await userModel.create({ nombre, apellido, email })
-
-        res.send({ result: "success", payload: result })
-    } catch (error) {
-        console.error(error)
-    }
-})*/
-
 router.put("/:uid", async (req, res) => {
     try {
         const { uid } = req.params

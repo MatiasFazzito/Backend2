@@ -1,1 +1,1 @@
-Arreglar el JWT no deja ver el /current
+Integrar proyecto anterior

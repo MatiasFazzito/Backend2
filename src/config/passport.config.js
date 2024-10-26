@@ -40,8 +40,6 @@ const initializePassport = () => {
 
                 const result = await userModel.create(newUser)
 
-                generateToken(user)
-
                 return done(null, result)
             } catch (error) {
                 return done("Error al obtener usuario: " + error)
@@ -58,7 +56,7 @@ const initializePassport = () => {
             }
             if (!isValidPassword(user, password)) {
                 return done(null, false)
-            }
+            }            
             return done(null, user)
         } catch (error) {
             return done(error)
@@ -71,7 +69,6 @@ const initializePassport = () => {
         callbackURL: "http://localhost:8080/api/session/githubcallback"
     }, async (accessToken, refreshToken, profile, done) => {
         try {
-            console.log(profile)
             const user = await userModel.findOne({ email: profile._json.email })
             if (!user) {
                 const newUser = {
@@ -109,6 +106,7 @@ const initializePassport = () => {
     passport.serializeUser((user, done) => {
         done(null, user._id)
     })
+
     passport.deserializeUser(async (id, done) => {
         const user = await userModel.findById(id)
         done(null, user)

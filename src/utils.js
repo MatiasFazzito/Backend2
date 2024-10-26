@@ -27,6 +27,7 @@ export const passportCall = (strategy) => {
                 return res.status(401).send({ error: info.messages ? info.messages : info.toString() })
             }
             req.user = user
+
             next()
         })(req, res, next)
     }
@@ -34,7 +35,9 @@ export const passportCall = (strategy) => {
 
 export const authorization = (role) => {
     return async (req, res, next) => {
-        if (req.user.role !== role) {
+        const user = req.session.user
+        
+        if (user.role !== role) {
             return res.status(403).send({ error: "No permission" })
         }
         next()

@@ -12,23 +12,18 @@ router.get("/failregister", async (req, res) => {
     res.send({ error: "Failed" })
 })
 
-router.post("/login", passport.authenticate("login", { failureRedirect: "/faillogin" }), async (req, res) => {
+router.post("/login", passport.authenticate("login", { failureRedirect: "/api/session/faillogin" }), async (req, res) => {
     if (!req.user) {
         return res.status(400).send({ status: "error", error: "Invalid credentials" })
     }
 
-    const user = req.session.user = {
-        firstName: req.user.firstName,
-        lastName: req.user.lastName,
-        age: req.user.age,
-        email: req.user.email
-    }
+    req.session.user = req.user
 
-    const token = generateToken(user)
-
+    const token = generateToken(req.user)
+    
     res.cookie("currentUser", token, { maxAge: 60 * 60 * 1000, httpOnly: true })
 
-    res.render("profile", user)
+    res.render("profile", req.user)
 
 })
 
@@ -46,20 +41,19 @@ router.get("/githubcallback", passport.authenticate("github", { failureRedirect:
 
     res.cookie("currentUser", token, { maxAge: 60 * 60 * 1000, httpOnly: true })
 
-    res.send("Estas Logueado con github")
+    res.render("profile", req.user)
 })
 
 router.get("/current", passportCall("jwt"), authorization("admin"), (req, res) => {
-
-    console.log(req.user)
-
-    res.send(req.user)
+    const user = req.user
+    res.send(user)
 })
 
 router.get("/logout", async (req, res) => {
     req.session.destroy(error => {
         if (!error) {
             res.clearCookie("connect.sid")
+            res.clearCookie("currentUser")
             res.send("Logout OK")
         }
         else res.send({ status: "Error", body: err })

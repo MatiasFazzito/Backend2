@@ -22,13 +22,13 @@ app.listen(PORT, () => {
     console.log("Server running on port 8080")
 })
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
 mongoose.connect(URIConection)
     .then(() => { console.log("Conectado a mongo") })
     .catch(() => { console.error("Error al intentar conectar a la base de datos") })
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use(cookieParser())
 app.use(session({
     store: MongoStore.create({
         mongoUrl: URIConection,
@@ -41,9 +41,12 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }))
+
 initializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
+
+app.use(cookieParser())
 
 app.engine("handlebars", handlebars.engine())
 app.set('views', __dirname + '/views')
