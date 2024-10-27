@@ -2,8 +2,9 @@ import passport from "passport"
 import local from "passport-local"
 import GitHubStrategy from "passport-github2"
 import jwt from "passport-jwt"
-import userModel from "../models/user.model.js"
 import { createHash, isValidPassword } from "../utils.js"
+import CartModel from "../models/cart.model.js"
+import UserModel from "../models/user.model.js"
 
 const LocalStrategy = local.Strategy
 const JWTStrategy = jwt.Strategy
@@ -23,24 +24,29 @@ const initializePassport = () => {
         { passReqToCallback: true, usernameField: "email" }, async (req, username, password, done) => {
             const { firstName, lastName, email, age } = req.body
             try {
-                const user = await userModel.findOne({ email: username })
-
+                const user = await UserModel.findOne({ email: username })
+                
                 if (user) {
                     console.log("user already exist")
                     return done(null, false)
                 }
+
+                const newcart = new CartModel()
+                await newcart.save()
 
                 const newUser = {
                     firstName,
                     lastName,
                     email,
                     age,
-                    password: createHash(password)
+                    password: createHash(password),
+                    cart: newcart.id
                 }
 
-                const result = await userModel.create(newUser)
+                const result = await UserModel.create(newUser)
 
                 return done(null, result)
+
             } catch (error) {
                 return done("Error al obtener usuario: " + error)
             }
@@ -49,15 +55,19 @@ const initializePassport = () => {
 
     passport.use("login", new LocalStrategy({ usernameField: "email" }, async (username, password, done) => {
         try {
-            const user = await userModel.findOne({ email: username })
+            const user = await UserModel.findOne({ email: username })
+
             if (!user) {
                 console.log("User not found")
                 return done(null, false)
             }
+
             if (!isValidPassword(user, password)) {
                 return done(null, false)
-            }            
+            }
+
             return done(null, user)
+
         } catch (error) {
             return done(error)
         }
@@ -69,7 +79,10 @@ const initializePassport = () => {
         callbackURL: "http://localhost:8080/api/session/githubcallback"
     }, async (accessToken, refreshToken, profile, done) => {
         try {
-            const user = await userModel.findOne({ email: profile._json.email })
+            const user = await UserModel.findOne({ email: profile._json.email })
+            const newcart = new CartModel()
+            await newcart.save()
+
             if (!user) {
                 const newUser = {
                     firstName: profile._json.name,
@@ -77,10 +90,14 @@ const initializePassport = () => {
                     age: 18,
                     email: profile._json.email,
                     password: "",
+                    cart: newcart.id,
                     role: "admin"
                 }
-                const result = await userModel.create(newUser)
+
+                const result = await UserModel.create(newUser)
+
                 done(null, result)
+
             } else {
                 done(null, user)
             }
@@ -108,7 +125,7 @@ const initializePassport = () => {
     })
 
     passport.deserializeUser(async (id, done) => {
-        const user = await userModel.findById(id)
+        const user = await UserModel.findById(id)
         done(null, user)
     })
 }

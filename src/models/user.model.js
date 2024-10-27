@@ -6,10 +6,10 @@ const userSchema = new mongoose.Schema({
     email: { type: String, unique: true },
     age: { type: Number },
     password: { type: String },
-    //cart: String,
+    cart: {type: String},
     role: { type: String, default: "admin" }
 })
 
-const userModel = mongoose.model("users", userSchema)
+const UserModel = mongoose.model("users", userSchema)
 
-export default userModel
+export default UserModel

@@ -2,6 +2,17 @@ import { Router } from "express"
 
 const router = Router()
 
+router.get("/", (req,res)=>{
+    res.render("home")
+})
+
+router.get("/register", (req,res)=>{
+    res.render("register")
+})
+
+router.get("/login", (req,res)=>{
+    res.render("login")
+})
 
 router.get("/profile", (req, res) => {
     if (!req.session.user) {
@@ -12,16 +23,8 @@ router.get("/profile", (req, res) => {
     res.send("req.session.user")
 })
 
-router.get("/login", (req,res)=>{
-    res.render("login")
-})
-
-router.get("/register", (req,res)=>{
-    res.render("register")
-})
-
-router.get("/", (req,res)=>{
-    res.render("home")
+router.get('/addproduct', (req, res) => {
+    res.render('addproduct')
 })
 
 export default router

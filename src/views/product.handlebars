@@ -1,0 +1,17 @@
+<div class='productDetail'>
+    <h2>{{product.title}}</h2>
+    <p class='price'>Precio: ${{product.price}}</p>
+    <p class='description'>{{product.description}}</p>
+    <p class='id'>ID: {{product._id}}</p>
+    <p>Categoria: {{product.category}}</p>
+
+    <form action='/api/products/{{product._id}}/addtocart' method="POST" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="quantity" value="1">
+        <button type="submit">Agregar al carrito</button>
+    </form>
+    <br>
+    <form action='/api/products/{{product._id}}?_method=DELETE' method='POST' enctype='application/x-www-form-urlencoded'>
+        <input type='hidden' name='_method' value='DELETE'>
+        <button type='submit'>Eliminar producto</button>
+    </form>
+</div>

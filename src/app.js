@@ -6,11 +6,14 @@ import cookieParser from "cookie-parser"
 import dotenv from 'dotenv'
 import mongoose from "mongoose"
 import passport from "passport"
+import methodOverride from 'method-override'
 import initializePassport from "./config/passport.config.js"
 import __dirname from "./utils.js"
 import userRouter from "./routes/users.router.js"
 import sessionRouter from "./routes/session.router.js"
 import viewsRouter from "./routes/views.router.js"
+import productRouter from "./routes/product.router.js"
+//import cartRouter from "./routes/cart.router.js"
 
 const app = express()
 dotenv.config()
@@ -24,6 +27,7 @@ app.listen(PORT, () => {
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
 
 mongoose.connect(URIConection)
     .then(() => { console.log("Conectado a mongo") })
@@ -52,6 +56,10 @@ app.engine("handlebars", handlebars.engine())
 app.set('views', __dirname + '/views')
 app.set('view engine', 'handlebars')
 
+app.use(express.static(__dirname + '/public'))
+
 app.use("/", viewsRouter)
 app.use("/api/users", userRouter)
 app.use("/api/session", sessionRouter)
+app.use("/api/products", productRouter)
+//app.use('/api/cart', cartRouter)

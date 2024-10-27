@@ -1,0 +1,30 @@
+<div class="productList">
+    {{#if products.isValid}}
+    <div class="productContainer">
+        <h1>Lista de productos</h1>
+        <ul>
+            {{#each products.docs}}
+            <li class='productCard'>
+                <h2>{{this.title}}</h2>
+                <p>Precio: ${{this.price}}</p>
+                <p>Descripcion: {{this.description}}</p>
+                <p>Categoria: {{this.category}}</p>
+                <button><a href='/api/products/{{this._id}}'>Ver detalle</a></button>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+    <br>
+    <div class="productPagination">
+        {{#if products.hasPrevPage}}
+        <a href={{products.prevLink}}>Anterior</a>
+        {{/if}}
+        {{products.page}}
+        {{#if products.hasNextPage}}
+        <a href={{products.nextLink}}>Siguiente</a>
+        {{/if}}
+    </div>
+    {{else}}
+    <h1>No hay productos para mostrar</h1>
+    {{/if}}
+</div>
