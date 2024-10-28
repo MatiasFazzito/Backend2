@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import ProductModel from "../models/products.model.js"
+import CartModel from '../models/cart.model.js'
 
 const router = Router()
 
@@ -35,8 +36,8 @@ router.get('/', async (req, res) => {
 
         const products = await ProductModel.paginate(category ? { category } : {}, options)
 
-        products.prevLink = products.hasPrevPage ? `/product?page=${products.prevPage}&sortOrder=${sortOrder}&${category ? `category=${category}` : 'category='}`: ''
-        products.nextLink = products.hasNextPage ? `/product?page=${products.nextPage}&sortOrder=${sortOrder}&${category ? `category=${category}` : 'category='}`: ''
+        products.prevLink = products.hasPrevPage ? `/api/products?page=${products.prevPage}&sortOrder=${sortOrder}&${category ? `category=${category}` : 'category='}`: ''
+        products.nextLink = products.hasNextPage ? `/api/products?page=${products.nextPage}&sortOrder=${sortOrder}&${category ? `category=${category}` : 'category='}`: ''
 
         products.isValid = products.docs.length > 0
 
@@ -70,7 +71,7 @@ router.put('/:id', async (req, res) => {
             return res.render('error', { error: 'Producto no encontrado' })
         }
 
-        res.redirect('/api/product')
+        res.redirect('/api/products')
 
     } catch (error) {
         res.render('error', { error: 'Error al buscar productos' })
@@ -85,10 +86,34 @@ router.delete('/:id', async (req, res) => {
             return res.render('error', { error: 'Producto no encontrado' })
         }
 
-        res.redirect('/api/product')
+        res.redirect('/api/products')
 
     } catch (error) {
         res.render('error', { error: 'Error al buscar productos' })
+    }
+})
+
+router.post('/:id/addToCart', async (req, res) => {
+    try {
+        const { quantity = 1 } = req.body
+        const cartId = req.session.user.cart
+
+        const product = await ProductModel.findById(req.params.id)
+        const cart = await CartModel.findById(cartId)
+
+        const productIndex = cart.products.findIndex(item => item.product.toString() === product._id.toString())
+
+        if (productIndex !== -1) {
+            cart.products[productIndex].quantity = Number(cart.products[productIndex].quantity) + Number(quantity)
+        } else {
+            cart.products.push({ product: product._id, quantity })
+        }
+
+        await cart.save()
+
+        res.redirect(`/api/cart`)
+    } catch (error) {
+        res.render("error", { error: 'Error al agregar el producto al carrito' })
     }
 })
 
