@@ -10,8 +10,10 @@
         <button type="submit">Agregar al carrito</button>
     </form>
     <br>
+    {{#if user.isValid}}
     <form action='/api/products/{{product._id}}?_method=DELETE' method='POST' enctype='application/x-www-form-urlencoded'>
         <input type='hidden' name='_method' value='DELETE'>
         <button type='submit'>Eliminar producto</button>
     </form>
+    {{/if}}
 </div>

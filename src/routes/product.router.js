@@ -14,7 +14,6 @@ router.post('/', async (req, res) => {
 
     } catch (error) {
         res.render('error', { error: 'Error al crear producto' })
-        console.error(error)
     }
 })
 
@@ -36,8 +35,8 @@ router.get('/', async (req, res) => {
 
         const products = await ProductModel.paginate(category ? { category } : {}, options)
 
-        products.prevLink = products.hasPrevPage ? `/api/products?page=${products.prevPage}&sortOrder=${sortOrder}&${category ? `category=${category}` : 'category='}`: ''
-        products.nextLink = products.hasNextPage ? `/api/products?page=${products.nextPage}&sortOrder=${sortOrder}&${category ? `category=${category}` : 'category='}`: ''
+        products.prevLink = products.hasPrevPage ? `/api/products?page=${products.prevPage}&sortOrder=${sortOrder}&${category ? `category=${category}` : 'category='}` : ''
+        products.nextLink = products.hasNextPage ? `/api/products?page=${products.nextPage}&sortOrder=${sortOrder}&${category ? `category=${category}` : 'category='}` : ''
 
         products.isValid = products.docs.length > 0
 
@@ -50,13 +49,16 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
+        const user = req.session.user
         const product = await ProductModel.findById(req.params.id)
 
         if (!product) {
             return res.render('error', { error: 'Producto no encontrado' })
         }
 
-        res.render('product', { product: product.toObject() })
+        user.isValid = user.role == "admin"
+
+        res.render('product', { product: product.toObject(), user })
 
     } catch (error) {
         res.render('error', { error: 'Error al buscar productos' })

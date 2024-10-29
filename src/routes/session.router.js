@@ -9,7 +9,7 @@ router.post("/register", passport.authenticate("register", { failureRedirect: "/
 })
 
 router.get("/failregister", async (req, res) => {
-    res.send({ error: "Failed" })
+    res.render("error", { error: "Error en el registro de usuario" })
 })
 
 router.post("/login", passport.authenticate("login", { failureRedirect: "/api/session/faillogin" }), async (req, res) => {
@@ -28,7 +28,7 @@ router.post("/login", passport.authenticate("login", { failureRedirect: "/api/se
 })
 
 router.get("/faillogin", (req, res) => {
-    res.send({ error: "Failed Login" })
+    res.render("error", { error: "Error en el inicio de sesion" })
 })
 
 router.get("/github", passport.authenticate("github", { scope: ["user:email"] }), async (req, res) => { })
@@ -54,9 +54,9 @@ router.get("/logout", async (req, res) => {
         if (!error) {
             res.clearCookie("connect.sid")
             res.clearCookie("currentUser")
-            res.send("Logout OK")
+            res.redirect("/")
         }
-        else res.send({ status: "Error", body: err })
+        else res.send({ status: "Error", body: error })
 
     })
 })

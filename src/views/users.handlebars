@@ -1,0 +1,20 @@
+<div>
+    {{#if currentUser.isValid}}
+    <div class="userContainer">
+        <h1>Listado de usuarios</h1>
+        <ul>
+            {{#each users}}
+            <li class='usersCard'>
+                <h2>Nombre: {{this.firstName}}</h2>
+                <p>Apellido: {{this.lastName}}</p>
+                <p>edad: {{this.age}}</p>
+                <p>email: {{this.email}}</p>
+                <button><a href='/api/users/{{this._id}}'>Ver detalle</a></button>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+    {{else}}
+    <h1>No tienes permitido ver el listado de usuarios</h1>
+    {{/if}}
+</div>

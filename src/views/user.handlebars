@@ -1,0 +1,12 @@
+<div class='userDetail'>
+    <h2>Nombre: {{user.firstName}}</h2>
+    <p >Apellido: {{user.lastName}}</p>
+    <p >Edad: {{user.age}}</p>
+    <p >ID: {{user._id}}</p>
+    <p>email: {{user.email}}</p>
+
+    <form action='/api/products/{{user._id}}?_method=DELETE' method='POST' enctype='application/x-www-form-urlencoded'>
+        <input type='hidden' name='_method' value='DELETE'>
+        <button type='submit'>Eliminar producto</button>
+    </form>
+</div>

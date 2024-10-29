@@ -2,15 +2,15 @@ import { Router } from "express"
 
 const router = Router()
 
-router.get("/", (req,res)=>{
+router.get("/", (req, res) => {
     res.render("home")
 })
 
-router.get("/register", (req,res)=>{
+router.get("/register", (req, res) => {
     res.render("register")
 })
 
-router.get("/login", (req,res)=>{
+router.get("/login", (req, res) => {
     res.render("login")
 })
 
@@ -24,7 +24,17 @@ router.get("/profile", (req, res) => {
 })
 
 router.get('/addproduct', (req, res) => {
-    res.render('addproduct')
+    const user = req.session.user
+    if (user.role == "admin") {
+        res.render('addproduct')
+    } else {
+        res.render('error', { error: 'Credenciales no validas' })
+    }
+})
+
+router.get("/cart", (req,res)=>{
+    const user = req.session.user
+    res.render("cart", {user: user.cart})
 })
 
 export default router

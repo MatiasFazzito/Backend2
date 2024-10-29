@@ -1,5 +1,5 @@
 function fetchProducts() {
-    fetch('api/product/allproducts')
+    fetch('/api/products/allproducts')
     .then(response => response.json())
     .then(products =>{
       populateProductSelect(products)
