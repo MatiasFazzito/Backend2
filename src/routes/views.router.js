@@ -18,9 +18,9 @@ router.get("/profile", (req, res) => {
     if (!req.session.user) {
         res.redirect("/login")
     }
-    const { first_name, last_name, email, age, password } = req.session.user
-    res.render("profile", { first_name, last_name, email, age })
-    res.send("req.session.user")
+
+    const { firstName, lastName, email, age, password } = req.session.user
+    res.render("profile", { firstName, lastName, email, age })
 })
 
 router.get('/addproduct', (req, res) => {
@@ -32,9 +32,5 @@ router.get('/addproduct', (req, res) => {
     }
 })
 
-router.get("/cart", (req,res)=>{
-    const user = req.session.user
-    res.render("cart", {user: user.cart})
-})
 
 export default router

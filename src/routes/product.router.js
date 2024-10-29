@@ -113,7 +113,7 @@ router.post('/:id/addToCart', async (req, res) => {
 
         await cart.save()
 
-        res.redirect(`/api/cart`)
+        res.redirect(`/api/products`)
     } catch (error) {
         res.render("error", { error: 'Error al agregar el producto al carrito' })
     }

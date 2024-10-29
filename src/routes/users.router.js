@@ -26,6 +26,8 @@ router.get("/:uid", async (req, res) => {
     }
 })
 
+//Ruta en construccion
+
 /*router.put("/:uid", async (req, res) => {
     try {
         const { uid } = req.params

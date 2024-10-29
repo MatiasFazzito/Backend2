@@ -57,7 +57,6 @@ router.get("/logout", async (req, res) => {
             res.redirect("/")
         }
         else res.send({ status: "Error", body: error })
-
     })
 })
 

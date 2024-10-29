@@ -14,14 +14,40 @@ router.get("/", async (req, res) => {
     }
 })
 
-router.get('/products/allproducts', async (req, res) => {
+router.delete("/:cid", async (req, res) => {
     try {
-        const products = await ProductModel.find()
+        const { cid } = req.params
 
-        res.json(products)
+        const cart = await CartModel.findById(cid)
+
+        cart.products = []
+        await cart.save()
+
+        res.redirect(`/profile`)
+
     } catch (error) {
-        console.error('Error fetching products:', error)
-        res.status(500).send('Error fetching products')
+        res.render('error', { error: 'Error al eliminar carrito' })
+    }
+})
+
+router.delete("/:cid/product/:pid", async (req, res) => {
+    try {
+        const { cid, pid } = req.params
+
+        const cart = await CartModel.findById(cid)
+
+        const productIndex = cart.products.findIndex(p => p._id.toString() === pid)
+        if (!productIndex) {
+            return res.render("error", { error: 'Producto no encontrado en el carrito' })
+        }
+
+        cart.products.splice(productIndex, 1)
+        cart.save()
+
+        res.redirect(`/api/cart`)
+
+    } catch (error) {
+        res.render('error', { error: 'Error al eliminar producto en carrito' })
     }
 })
 
