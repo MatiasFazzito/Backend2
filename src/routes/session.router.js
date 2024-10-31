@@ -23,7 +23,7 @@ router.post("/login", passport.authenticate("login", { failureRedirect: "/api/se
     
     res.cookie("currentUser", token, { maxAge: 60 * 60 * 1000, httpOnly: true })
 
-    res.render("profile", req.user)
+    res.redirect("/home")
 
 })
 
@@ -41,7 +41,7 @@ router.get("/githubcallback", passport.authenticate("github", { failureRedirect:
 
     res.cookie("currentUser", token, { maxAge: 60 * 60 * 1000, httpOnly: true })
 
-    res.render("profile", req.user)
+    res.redirect("/home")
 })
 
 router.get("/current", passportCall("jwt"), authorization("admin"), (req, res) => {

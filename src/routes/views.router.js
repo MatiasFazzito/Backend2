@@ -3,6 +3,13 @@ import { Router } from "express"
 const router = Router()
 
 router.get("/", (req, res) => {
+    res.render("landing")
+})
+
+router.get("/home", (req,res)=>{
+    if (!req.session.user) {
+        res.render("error", { error: "Debe iniciar sesion para continuar" })
+    }
     res.render("home")
 })
 
