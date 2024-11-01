@@ -1,5 +1,6 @@
-<div class='cartDetail'>
-    <h2 class='id'>ID: {{cart._id}}</h2>
+<div class='cart'>
+    {{#if cart.products}}
+    <h1>Bienvenido a tu carrito</h1>
     <ul class="productList">
         {{#each cart.products}}
         <li class="productDetail">
@@ -19,6 +20,8 @@
         <input type='hidden' name='_method' value='DELETE'>
         <button type='submit'>Vaciar carrito</button>
     </form>
+    {{else}}
+    <h1>Tu carrito esta vacio!</h1>
+    <button class="emptyCart"><a href="/api/products">Vamos a llenarlo!</a></button>
+    {{/if}}
 </div>
-
-<script src="/js/productScript.js"></script>

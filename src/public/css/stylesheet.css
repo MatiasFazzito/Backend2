@@ -1,0 +1,435 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    line-height: 1.6;
+    background-color: #A7A7A9;
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+body header {
+    border-bottom: 2px solid black;
+    padding: 1%;
+    background-color: #453F3C;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+}
+
+body .landing {
+    margin: 1%;
+    padding: 1%;
+    height: 400px;
+    width: 400px;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    border: 2px solid black;
+    font-size: 1rem;
+    background-color: #B0C0BC;
+}
+
+body .landing .title {
+    font-size: 2rem;
+    text-decoration: underline;
+}
+
+body .landing .subTitle {
+    font-size: 1.5rem;
+}
+
+body .landing button {
+    padding: 1%;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #C1EDCC;
+}
+
+body .landing a {
+    text-decoration: none;
+    color: #000000;
+}
+
+body .loginContainer{
+    height: 500px;
+    padding: 1%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+body .loginContainer .login{
+    width: 40%;
+    padding: 2%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    background-color: #B0C0BC;
+    border: 1px solid #000000;
+}
+
+body .loginContainer .login input {
+    height: 1.5rem;
+    margin: 1%;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+body .loginContainer .login .loginButton {
+    width: 30%;
+    align-self: center;
+    height: 1.5rem;
+    background-color: #C1EDCC;
+}
+
+body .loginContainer .thirdParty{
+    width: 30%;
+    align-self: center;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+body .loginContainer .thirdParty button{
+    padding: 1%;
+    margin: 1%;
+    background-color: #C1EDCC;
+    text-align: center;
+}
+
+body .loginContainer .thirdParty a{
+    text-decoration: none;
+    color: #000000;
+}
+
+body .registerContainer{
+    height: 500px;
+    padding: 1%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+body .registerContainer .register{
+    width: 40%;
+    padding: 2%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    background-color: #B0C0BC;
+    border: 1px solid #000000;
+}
+
+body .registerContainer .register input {
+    height: 1.5rem;
+    margin: 1%;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+body .registerContainer .register .registerButton {
+    width: 30%;
+    align-self: center;
+    height: 1.5rem;
+    background-color: #C1EDCC;
+}
+
+body .home {
+    margin: 1%;
+    padding: 1%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    border: 2px solid black;
+    font-size: 1rem;
+    background-color: #B0C0BC;
+}
+
+body .home nav{
+    width: 80%;
+    padding: 1%;
+    align-self: center;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+body .home nav button{
+    padding: 1%;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #C1EDCC;
+}
+
+body .home nav .logout{
+    background-color: #A7A7A9;
+}
+
+body .home nav .logout a{
+    color: #bb0000;
+}
+
+body .home nav button a {
+    text-decoration: none;
+    color: #000000;
+}
+
+body .profileContainer{
+    margin: 1%;
+    padding: 1%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    border: 2px solid black;
+    font-size: 1rem;
+    background-color: #B0C0BC;
+}
+
+body .profileContainer .profile{
+    margin: 3%;
+    padding: 2%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #A7A7A9;
+}
+
+body .profileContainer .profile button{
+    padding: 1%;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #C1EDCC;
+}
+
+body .profileContainer .profile button a{
+    text-decoration: none;
+    color: #000000;
+}
+
+body .cart {
+    margin: 1%;
+    padding: 1%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    border: 2px solid black;
+    font-size: 1rem;
+    background-color: #B0C0BC;
+}
+
+body .cart .productList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+body .cart .productList .productDetail {
+    margin: 1%;
+    font-weight: bold;
+    min-width: fit-content;
+}
+
+body .cart .productList .productDetail a {
+    color: #000000;
+}
+
+body .cart .cleanCart{
+    width: 10%;
+    margin: 1%;
+}
+
+body .cart .cleanCart button{
+    padding: 10%;
+    background-color: #C1EDCC;
+}
+
+body .cart .emptyCart {
+    padding: 3%;
+    background-color: #C1EDCC;
+}
+
+body .cart .emptyCart a{
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: #000000;
+}
+
+body .productList {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5%;
+}
+
+body .productList .productContainer {
+    margin: 1%;
+    padding: 1%;
+}
+
+body .productList .productContainer h1 {
+    font-size: 2.5rem;
+    text-decoration: underline;
+}
+
+body .productList .productContainer .productCard {
+    margin: 1%;
+    padding: 1%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    border: 2px solid black;
+    font-size: 1rem;
+    background-color: #B0C0BC;
+}
+
+body .productList .productContainer .productCard button {
+    padding: 0.5%;
+    background-color: #C1EDCC;
+}
+
+body .productList .productContainer .productCard button a {
+    text-decoration: none;
+    color: #000000;
+}
+
+body .productList .productPagination {
+    align-self: center;
+    width: 30%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+body .productDetail {
+    margin: 1%;
+    padding: 1%;
+    min-width: 300px;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    text-align: center;
+    border: 2px solid black;
+    background-color: #B0C0BC;
+}
+
+body .productDetail .title{
+    text-decoration: underline;
+}
+
+body .productDetail p{
+    margin: 1%;
+}
+
+body .productDetail button {
+    margin: 3%;
+    padding: 1%;
+    background-color: #C1EDCC;
+}
+
+body .productDetail button a {
+    text-decoration: none;
+    color: #000000;
+}
+
+body .addProduct {
+    padding: 1%;
+    margin-bottom: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+body .addProduct h1 {
+    font-size: 2rem;
+}
+
+body .addProduct form {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #000000;
+    width: 40%;
+    padding: 2%;
+    background-color: #B0C0BC;
+}
+
+body .addProduct form input {
+    height: 1.5rem;
+    margin: 1%;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+body .addProduct form button {
+    width: 30%;
+    height: 1.5rem;
+    background-color: #C1EDCC;
+    align-self: center;
+}
+
+body footer {
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    margin: 0;
+    background-color: #453F3C;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 2rem;
+    width: 100%;
+    height: 5%;
+}
+
+body .errorContainer {
+    margin: 1%;
+    padding: 1%;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    border: 2px solid black;
+    font-size: 1rem;
+    background-color: #B0C0BC;
+}
+
+body .errorContainer .errorTitle {
+    font-size: 4rem;
+    text-decoration: underline solid;
+}
+
+body .errorContainer .errorDescription {
+    font-size: 2rem;
+}
+
+body .errorContainer button {
+    width: 30%;
+    height: fit-content;
+    font-size: 2rem;
+}
+
+body .errorContainer button a {
+    text-decoration: none;
+    color: #000000;
+}
