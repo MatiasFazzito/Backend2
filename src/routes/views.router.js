@@ -3,7 +3,7 @@ import { Router } from "express"
 const router = Router()
 
 router.get("/", (req, res) => {
-    res.render("landing")
+    res.render("landing", { currentPage: 'landing' })
 })
 
 router.get("/home", (req,res)=>{
@@ -14,11 +14,11 @@ router.get("/home", (req,res)=>{
 })
 
 router.get("/register", (req, res) => {
-    res.render("register")
+    res.render("register", { currentPage: 'landing' })
 })
 
 router.get("/login", (req, res) => {
-    res.render("login")
+    res.render("login", { currentPage: 'landing' })
 })
 
 router.get("/profile", (req, res) => {

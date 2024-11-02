@@ -1,5 +1,6 @@
 import express from "express"
 import handlebars from 'express-handlebars'
+import Handlebars from "handlebars"
 import session from "express-session"
 import MongoStore from "connect-mongo"
 import cookieParser from "cookie-parser"
@@ -55,6 +56,16 @@ app.use(cookieParser())
 app.engine("handlebars", handlebars.engine())
 app.set('views', __dirname + '/views')
 app.set('view engine', 'handlebars')
+
+Handlebars.registerHelper('showHeader', function(options) {
+    const isLandingPage = this.currentPage === 'landing'
+
+    if (!isLandingPage) {
+        return options.fn(this)
+    } else {
+        return options.inverse(this)
+    }
+})
 
 app.use(express.static(__dirname + '/public'))
 
