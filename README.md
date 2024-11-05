@@ -1,1 +1,1 @@
-Terminar de configurar ruta para modificacion de usuario
+Actualizar UI general y navegacion
