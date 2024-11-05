@@ -7,10 +7,15 @@ router.get("/", (req, res) => {
 })
 
 router.get("/home", (req, res) => {
-    if (!req.session.user) {
+    const currentUser = req.session.user
+
+    if (!currentUser) {
         res.render("error", { error: "Debe iniciar sesion para continuar" })
     }
-    res.render("home")
+
+    currentUser.isValid = currentUser.role == "admin"
+
+    res.render("home", { currentUser, currentPage: 'landing' })
 })
 
 router.get("/register", (req, res) => {
@@ -45,6 +50,12 @@ router.get("/edituser/:uid", (req, res) => {
     currentUser.isValid = currentUser.role === "admin"
 
     res.render("edituser", { user, currentUser })
+})
+
+router.get("/checkout", (req,res)=>{
+    const user = req.session.user
+
+    res.render("checkout", user)
 })
 
 
