@@ -6,7 +6,7 @@ router.get("/", (req, res) => {
     res.render("landing", { currentPage: 'landing' })
 })
 
-router.get("/home", (req,res)=>{
+router.get("/home", (req, res) => {
     if (!req.session.user) {
         res.render("error", { error: "Debe iniciar sesion para continuar" })
     }
@@ -26,8 +26,8 @@ router.get("/profile", (req, res) => {
         res.redirect("/login")
     }
 
-    const { firstName, lastName, email, age, password } = req.session.user
-    res.render("profile", { firstName, lastName, email, age })
+    const user = req.session.user
+    res.render("profile", { user })
 })
 
 router.get('/addproduct', (req, res) => {
@@ -37,6 +37,14 @@ router.get('/addproduct', (req, res) => {
     } else {
         res.render('error', { error: 'Credenciales no validas' })
     }
+})
+
+router.get("/edituser/:uid", (req, res) => {
+    const user = req.params.uid
+    const currentUser = req.session.user
+    currentUser.isValid = currentUser.role === "admin"
+
+    res.render("edituser", { user, currentUser })
 })
 
 

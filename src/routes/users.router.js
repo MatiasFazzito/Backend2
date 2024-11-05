@@ -26,30 +26,33 @@ router.get("/:uid", async (req, res) => {
     }
 })
 
-//Ruta en construccion
-
-/*router.put("/:uid", async (req, res) => {
+router.put("/:uid", async (req, res) => {
     try {
-        const { uid } = req.params
-        const userToReplace = req.body
+        const updates = req.body
 
-        if (!userToReplace.nombre || !userToReplace.apellido || !userToReplace.email) {
-            res.send({ status: "error", error: "faltan parametros" })
+        const updateData = { $set: {} }
+
+        for (const key in updates) {
+            if (updates.hasOwnProperty(key) && updates[key] !== '') {
+                updateData.$set[key] = updates[key];
+            }
         }
 
-        const result = await userModel.updateOne({ _id: uid }, userToReplace)
+        await userModel.findByIdAndUpdate(req.params.uid, updateData)
 
-        res.send({ result: "success", payload: result })
+        res.redirect("/")
 
     } catch (error) {
+        console.log(error)
+
         res.render("error", { error: "Error al modificar usuario" })
     }
-})*/
+})
 
 router.delete("/:uid", async (req, res) => {
     try {
         const { uid } = req.params
-        const result = await userModel.deleteOne({ _id: uid })
+        await userModel.deleteOne({ _id: uid })
 
         res.redirect("/api/users")
     } catch (error) {

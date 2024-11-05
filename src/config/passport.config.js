@@ -91,7 +91,7 @@ const initializePassport = () => {
                     email: profile._json.email,
                     password: "",
                     cart: newcart.id,
-                    role: "admin" //seteadoa  admin para desarrollo, luego sera cambiado a user
+                    role: "user"
                 }
 
                 const result = await UserModel.create(newUser)

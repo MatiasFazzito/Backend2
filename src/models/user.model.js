@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     age: { type: Number },
     password: { type: String },
     cart: {type: String},
-    role: { type: String, default: "admin" } //seteado a default admin solo para desarrollo y correccion, luego se cambiara a dafault user
+    role: { type: String, default: "user" }
 })
 
 const UserModel = mongoose.model("users", userSchema)

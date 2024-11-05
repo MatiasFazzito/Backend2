@@ -1,9 +1,10 @@
 <div class="profileContainer">
     <h1>Perfil del usuario</h1>
     <div class="profile">
-        <h2>Nombre: {{firstName}} {{lastName}}</h2>
-        <h3>Email: {{email}}</h3>
-        <p>Edad: {{age}}</p>
+        <h2>Nombre: {{user.firstName}} {{user.lastName}}</h2>
+        <h3>Email: {{user.email}}</h3>
+        <p>Edad: {{user.age}}</p>
         <button class="cart"><a href="/api/cart">Ver carrito</a></button>
+        <button><a href="/editUser/{{user._id}}">Editar info</a></button>
     </div>
 </div>

@@ -1,0 +1,29 @@
+<div class="editContainer">
+    <form class="editUser" method="POST" action="/api/users/{{user}}?_method=PUT">
+
+        <label for="firstName">First Name</label>
+        <input type="text" name="firstName" id="firstName">
+
+        <label for="lastName">Last Name</label>
+        <input type="text" name="lastName" id="lastName">
+
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email">
+
+        <label for="age">Age</label>
+        <input type="number" name="age" id="age">
+
+        {{#if currentUser.isValid}}
+        <label for="role">Role</label>
+        <select name="role" id="role">
+            <option value="">Selecciona un producto</option>
+            <option value="admin">Admin</option>
+            <option value="VIP">VIP</option>
+            <option value="user">User</option>
+        </select>
+        {{/if}}
+
+        <button class="registerButton" type="submit">Register</button>
+    </form>
+    <h1>Al actualizar los datos de usuario se solicitara iniciar sesion nuevamente</h1>
+</div>
