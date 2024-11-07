@@ -1,14 +1,17 @@
 import { Router } from "express"
 import userModel from "../models/user.model.js"
+import { handlePolicies, passportCall } from "../utils.js"
 
 const router = Router()
 
-router.get("/", async (req, res) => {
+router.get("/", passportCall("jwt"), handlePolicies(["VIP", "admin"]), async (req, res) => {
     try {
         const currentUser = req.session.user
-        const users = await userModel.find().lean()
+        if (currentUser.role == "admin" || currentUser.role == "VIP") {
+            currentUser.isValid = true
+        }
 
-        currentUser.isValid = currentUser.role == "admin"
+        const users = await userModel.find().lean()
 
         res.render("users", { users, currentUser })
     } catch (error) {
@@ -16,7 +19,7 @@ router.get("/", async (req, res) => {
     }
 })
 
-router.get("/:uid", async (req, res) => {
+router.get("/:uid", passportCall("jwt"), handlePolicies(["user", "VIP", "admin"]), async (req, res) => {
     try {
         const user = await userModel.findById(req.params.uid).lean()
 
@@ -26,7 +29,7 @@ router.get("/:uid", async (req, res) => {
     }
 })
 
-router.put("/:uid", async (req, res) => {
+router.put("/:uid", passportCall("jwt"), handlePolicies(["user", "VIP", "admin"]), async (req, res) => {
     try {
         const updates = req.body
 
@@ -49,7 +52,7 @@ router.put("/:uid", async (req, res) => {
     }
 })
 
-router.delete("/:uid", async (req, res) => {
+router.delete("/:uid", passportCall("jwt"), handlePolicies(["user", "VIP", "admin"]), async (req, res) => {
     try {
         const { uid } = req.params
         await userModel.deleteOne({ _id: uid })

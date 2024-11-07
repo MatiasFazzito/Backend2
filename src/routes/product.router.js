@@ -65,7 +65,8 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.put('/:id', async (req, res) => {
+//Ruta en construccion
+/*router.put('/:id', async (req, res) => {
     try {
         const product = await ProductModel.findByIdAndUpdate(req.params.id, req.body)
 
@@ -78,7 +79,7 @@ router.put('/:id', async (req, res) => {
     } catch (error) {
         res.render('error', { error: 'Error al buscar productos' })
     }
-})
+})*/
 
 router.delete('/:id', async (req, res) => {
     try {

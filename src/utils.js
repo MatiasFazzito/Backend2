@@ -24,7 +24,7 @@ export const passportCall = (strategy) => {
                 return next(error)
             }
             if (!user) {
-                return res.status(401).send({ error: info.messages ? info.messages : info.toString() })
+                return res.render("error", { error: "No permission" }) 
             }
             req.user = user
 
@@ -33,14 +33,26 @@ export const passportCall = (strategy) => {
     }
 }
 
-export const authorization = (role) => {
-    return async (req, res, next) => {
-        const user = req.session.user
-        
-        if (user.role !== role) {
-            return res.status(403).send({ error: "No permission" })
+export const handlePolicies = (policies)=>{
+    return (req, res, next)=>{
+        if (policies.includes("PUBLIC")) {
+            next()
+        } else{
+            const token = req.cookies.currentUser
+            if (!token) {
+                return res.render("error", { error: "No permission" })                
+            }
+            try {
+                const decoded = jwt.verify(token, PRIVATE_KEY)
+                if (policies.includes(decoded.user.role)) {
+                    next()
+                } else{
+                    return res.render("error", { error: "No permission" })
+                }
+            } catch (error) {
+                return res.render("error", { error: "Invalid Token" })
+            }
         }
-        next()
     }
 }
 

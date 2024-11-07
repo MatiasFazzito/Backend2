@@ -1,4 +1,5 @@
 import { Router } from "express"
+import { handlePolicies, passportCall } from "../utils.js"
 
 const router = Router()
 
@@ -6,14 +7,11 @@ router.get("/", (req, res) => {
     res.render("landing", { currentPage: 'landing' })
 })
 
-router.get("/home", (req, res) => {
+router.get("/home", passportCall("jwt"), handlePolicies(["user", "VIP", "admin"]), (req, res) => {
     const currentUser = req.session.user
-
-    if (!currentUser) {
-        res.render("error", { error: "Debe iniciar sesion para continuar" })
+    if (currentUser.role == "admin"|| currentUser.role == "VIP") {
+        currentUser.isValid = true
     }
-
-    currentUser.isValid = currentUser.role == "admin"
 
     res.render("home", { currentUser, currentPage: 'landing' })
 })
@@ -26,25 +24,16 @@ router.get("/login", (req, res) => {
     res.render("login", { currentPage: 'landing' })
 })
 
-router.get("/profile", (req, res) => {
-    if (!req.session.user) {
-        res.redirect("/login")
-    }
-
+router.get("/profile", passportCall("jwt"), handlePolicies(["user", "VIP", "admin"]), (req, res) => {
     const user = req.session.user
     res.render("profile", { user })
 })
 
-router.get('/addproduct', (req, res) => {
-    const user = req.session.user
-    if (user.role == "admin") {
-        res.render('addproduct')
-    } else {
-        res.render('error', { error: 'Credenciales no validas' })
-    }
+router.get('/addproduct', passportCall("jwt"), handlePolicies(["VIP", "admin"]), (req, res) => {
+    res.render('addproduct')
 })
 
-router.get("/edituser/:uid", (req, res) => {
+router.get("/edituser/:uid", passportCall("jwt"), handlePolicies(["user", "VIP", "admin"]), (req, res) => {
     const user = req.params.uid
     const currentUser = req.session.user
     currentUser.isValid = currentUser.role === "admin"
@@ -52,7 +41,8 @@ router.get("/edituser/:uid", (req, res) => {
     res.render("edituser", { user, currentUser })
 })
 
-router.get("/checkout", (req,res)=>{
+//Ruta en construccion
+router.get("/checkout", passportCall("jwt"), handlePolicies(["user", "VIP", "admin"]), (req, res) => {
     const user = req.session.user
 
     res.render("checkout", user)

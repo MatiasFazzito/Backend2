@@ -1,6 +1,5 @@
 <div>
     <h1>Listado de usuarios</h1>
-    {{#if currentUser.isValid}}
     <div class="userContainer">
         <ul>
             {{#each users}}
@@ -14,7 +13,4 @@
             {{/each}}
         </ul>
     </div>
-    {{else}}
-    <h1>No tienes permitido ver el listado de usuarios</h1>
-    {{/if}}
 </div>

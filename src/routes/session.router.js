@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { authorization, generateToken, passportCall } from "../utils.js"
+import { generateToken, handlePolicies, passportCall } from "../utils.js"
 import passport from "passport"
 
 const router = Router()
@@ -20,7 +20,7 @@ router.post("/login", passport.authenticate("login", { failureRedirect: "/api/se
     req.session.user = req.user
 
     const token = generateToken(req.user)
-    
+
     res.cookie("currentUser", token, { maxAge: 60 * 60 * 1000, httpOnly: true })
 
     res.redirect("/home")
@@ -44,7 +44,7 @@ router.get("/githubcallback", passport.authenticate("github", { failureRedirect:
     res.redirect("/home")
 })
 
-router.get("/current", passportCall("jwt"), authorization("admin"), (req, res) => {
+router.get("/current", passportCall("jwt"), handlePolicies(["VIP", "admin"]), (req, res) => {
     const user = req.user
     res.send(user)
 })
