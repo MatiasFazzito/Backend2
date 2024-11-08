@@ -4,7 +4,6 @@ import Handlebars from "handlebars"
 import session from "express-session"
 import MongoStore from "connect-mongo"
 import cookieParser from "cookie-parser"
-import dotenv from 'dotenv'
 import mongoose from "mongoose"
 import passport from "passport"
 import methodOverride from 'method-override'
@@ -17,26 +16,27 @@ import productRouter from "./routes/product.router.js"
 import cartRouter from "./routes/cart.router.js"
 
 const app = express()
-dotenv.config()
 
-const PORT = 8080
-const URIConection = process.env.URIMONGO
+process.loadEnvFile()
+
+const PORT = process.env.PORT
+const URLConection = process.env.URLMONGO
 
 app.listen(PORT, () => {
-    console.log("Server running on port 8080")
+    console.log(`Server running on port ${PORT}`)
 })
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
-mongoose.connect(URIConection)
+mongoose.connect(URLConection)
     .then(() => { console.log("Conectado a mongo") })
     .catch(() => { console.error("Error al intentar conectar a la base de datos") })
 
 app.use(session({
     store: MongoStore.create({
-        mongoUrl: URIConection,
+        mongoUrl: URLConection,
         mongoOptions: {
             serverSelectionTimeoutMS: 30000
         },
@@ -57,7 +57,7 @@ app.engine("handlebars", handlebars.engine())
 app.set('views', __dirname + '/views')
 app.set('view engine', 'handlebars')
 
-Handlebars.registerHelper('showHeader', function(options) {
+Handlebars.registerHelper('showHeader', function (options) {
     const isLandingPage = this.currentPage === 'landing'
 
     if (!isLandingPage) {
