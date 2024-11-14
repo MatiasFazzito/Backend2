@@ -21,18 +21,12 @@ export default class User {
         }
     }
 
-    updateUser = async (id, user) => {
+    updateUser = async (id, updateData) => {
         try {
-            const updates = user
-            const updateData = { $set: {} }
+            const user = await UserModel.updateOne({ _id: id }, updateData)
 
-            for (const key in updates) {
-                if (updates.hasOwnProperty(key) && updates[key] !== '') {
-                    updateData.$set[key] = updates[key];
-                }
-            }
+            return user
 
-            await UserModel.updateOne({ _id: id }, updateData)
         } catch (error) {
             return null
         }
@@ -40,9 +34,8 @@ export default class User {
 
     deleteUser = async (id) => {
         try {
-            const { uid } = req.params
             
-            await UserModel.deleteOne({ _id: uid })
+            await UserModel.deleteOne({ _id: id })
 
         } catch (error) {
             return null
