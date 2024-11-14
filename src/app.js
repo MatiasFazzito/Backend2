@@ -1,4 +1,5 @@
 import express from "express"
+import cors from "cors"
 import handlebars from 'express-handlebars'
 import Handlebars from "handlebars"
 import session from "express-session"
@@ -26,6 +27,7 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
 
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))

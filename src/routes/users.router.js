@@ -32,7 +32,6 @@ router.get("/:uid", passportCall("jwt"), handlePolicies(["user", "VIP", "admin"]
 router.put("/:uid", passportCall("jwt"), handlePolicies(["user", "VIP", "admin"]), async (req, res) => {
     try {
         const updates = req.body
-
         const updateData = { $set: {} }
 
         for (const key in updates) {
@@ -52,10 +51,14 @@ router.put("/:uid", passportCall("jwt"), handlePolicies(["user", "VIP", "admin"]
     }
 })
 
-router.delete("/:uid", passportCall("jwt"), handlePolicies(["user", "VIP", "admin"]), async (req, res) => {
+router.delete("/:uid", passportCall("jwt"), handlePolicies(["admin"]), async (req, res) => {
     try {
+        const currentUser = req.session.user
         const { uid } = req.params
         await userModel.deleteOne({ _id: uid })
+        if (currentUser.role == "admin") {
+            currentUser.isValid = true
+        }
 
         res.redirect("/api/users")
     } catch (error) {

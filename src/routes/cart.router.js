@@ -51,4 +51,9 @@ router.delete("/:cid/product/:pid", async (req, res) => {
     }
 })
 
+//Ruta en construccion
+router.post("/checkout", (req, res) => {
+
+})
+
 export default router

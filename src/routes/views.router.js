@@ -29,7 +29,7 @@ router.get("/profile", passportCall("jwt"), handlePolicies(["user", "VIP", "admi
     res.render("profile", { user })
 })
 
-router.get('/addproduct', passportCall("jwt"), handlePolicies(["VIP", "admin"]), (req, res) => {
+router.get('/addproduct', passportCall("jwt"), handlePolicies([ "admin"]), (req, res) => {
     res.render('addproduct')
 })
 
@@ -42,7 +42,7 @@ router.get("/edituser/:uid", passportCall("jwt"), handlePolicies(["user", "VIP",
 })
 
 //Ruta en construccion
-router.get("/checkout", passportCall("jwt"), handlePolicies(["user", "VIP", "admin"]), (req, res) => {
+router.get("/checkout", passportCall("jwt"), handlePolicies(["user", "VIP"]), (req, res) => {
     const user = req.session.user
 
     res.render("checkout", user)
