@@ -7,7 +7,7 @@
     <p>email: {{user.email}}</p>
     <button><a href="/editUser/{{user._id}}">Editar usuario</a></button>
 
-    {{#if user.isValid}}
+    {{#if currentUser.isValid}}
     <form action='/api/users/{{user._id}}?_method=DELETE' method='POST' enctype='application/x-www-form-urlencoded'>
         <input type='hidden' name='_method' value='DELETE'>
         <button type='submit'>Eliminar usuario</button>

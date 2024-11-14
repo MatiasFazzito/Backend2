@@ -1,4 +1,4 @@
-import UserModel from "../models/user.model"
+import UserModel from "../models/user.model.js"
 
 export default class User {
     getUsers = async () => {
@@ -13,7 +13,7 @@ export default class User {
 
     getUserById = async (id) => {
         try {
-            const user = await UserModel.findOne({ _id: id })
+            const user = await UserModel.findOne({ _id: id }).lean()
 
             return user
         } catch (error) {

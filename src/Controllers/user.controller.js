@@ -3,38 +3,68 @@ import User from "../dao/classes/user.dao.js"
 const userService = new User()
 
 export const getUsers = async (req, res) => {
-    const result = await userService.getUsers()
+    try {
+        const currentUser = req.session.user
+        if (currentUser.role == "admin" || currentUser.role == "VIP") {
+            currentUser.isValid = true
+        }
 
-    res.send({ status: "success", result })
+        const users = await userService.getUsers()
+
+        res.render("users", { users, currentUser })
+    } catch (error) {
+        res.render("error", { error: "Error al obtener usuarios" })
+    }
 }
 
 export const getUserById = async (req, res) => {
-    const { uid } = req.params
-    const user = await userService.getUserById(uid)
+    try {
+        const currentUser = req.session.user
+        const { uid } = req.params
+        const user = await userService.getUserById(uid)
 
-    res.send({ status: "success", result: user })
+        if (currentUser.role == "admin") {
+            currentUser.isValid = true
+        }
+
+        res.render("user", { user, currentUser })
+    } catch (error) {
+        res.render("error", { error: "Error al obtener usuario" })
+    }
 }
 
 export const updateUser = async (req, res) => {
-    const { uid } = req.params
-    const updates = req.body
-    const updateData = { $set: {} }
+    try {
+        const { uid } = req.params
+        const updates = req.body
+        const updateData = { $set: {} }
 
-    for (const key in updates) {
-        if (updates.hasOwnProperty(key) && updates[key] !== '') {
-            updateData.$set[key] = updates[key];
+        for (const key in updates) {
+            if (updates.hasOwnProperty(key) && updates[key] !== '') {
+                updateData.$set[key] = updates[key];
+            }
         }
+
+        const user = await userService.updateUser(uid, updateData)
+
+        res.redirect("/")
+    } catch (error) {
+        res.render("error", { error: "Error al modificar usuario" })
     }
-
-    const user = await userService.updateUser(uid, updateData)
-
-    res.send({status: "success", result: user})
 }
 
-export const deleteUser = async (req,res)=>{
-    const { uid } = req.params
+export const deleteUser = async (req, res) => {
+    try {
+        const currentUser = req.session.user
+        const { uid } = req.params
+        if (currentUser.role == "admin") {
+            currentUser.isValid = true
+        }
 
-    await userService.deleteUser(uid)
+        await userService.deleteUser(uid)
 
-    res.send({status: "success"})
+        res.redirect("/api/users")
+    } catch (error) {
+        res.render("error", { error: "Error al eliminar usuario" })
+    }
 }

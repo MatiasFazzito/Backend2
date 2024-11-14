@@ -4,7 +4,7 @@ import GitHubStrategy from "passport-github2"
 import jwt from "passport-jwt"
 import { createHash, isValidPassword } from "../utils.js"
 import CartModel from "../models/cart.model.js"
-import UserModel from "../models/user.model.js"
+import UserModel from "../dao/models/user.model.js"
 
 const LocalStrategy = local.Strategy
 const JWTStrategy = jwt.Strategy
