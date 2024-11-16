@@ -4,7 +4,7 @@ export default class Ticket {
 
     getTickets = async () => {
         try {
-            let result = await TicketsModel.find()
+            const result = await TicketsModel.find()
 
             return result
         } catch (error) {
@@ -15,7 +15,7 @@ export default class Ticket {
 
     getTicketById = async (id) => {
         try {
-            let result = await TicketsModel.findOne({ _id: id })
+            const result = await TicketsModel.findOne({ _id: id })
             
             return result
         } catch (error) {
@@ -26,7 +26,7 @@ export default class Ticket {
 
     createTicket = async (ticket) => {
         try {
-            let result = await TicketsModel.create(ticket)
+            const result = await TicketsModel.create(ticket)
 
             return result
         } catch (error) {
@@ -37,12 +37,11 @@ export default class Ticket {
 
     resolveTicket = async (id, ticket) => {
         try {
-            let result = await TicketsModel.updateOne({ _id: id }, { $set: ticket })
+            const result = await TicketsModel.updateOne({ _id: id }, { $set: ticket })
 
             return result
         } catch (error) {
             return null
         }
     }
-
 }

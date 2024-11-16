@@ -13,6 +13,6 @@ const ticketSchema = new mongoose.Schema({
     }
 })
 
-const TicketModel = mongoose.model("users", ticketSchema)
+const TicketModel = mongoose.model("tickets", ticketSchema)
 
 export default TicketModel

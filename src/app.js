@@ -18,11 +18,12 @@ import cartRouter from "./routes/cart.router.js"
 
 const app = express()
 
+//.env
 process.loadEnvFile()
-
 const PORT = process.env.PORT
 const URLConection = process.env.URLMONGO
 
+//Server config
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
@@ -32,6 +33,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
+//Mongo
 mongoose.connect(URLConection)
     .then(() => { console.log("Conectado a mongo") })
     .catch(() => { console.error("Error al intentar conectar a la base de datos") })
@@ -49,12 +51,13 @@ app.use(session({
     saveUninitialized: false
 }))
 
+//Passport
 initializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
-
 app.use(cookieParser())
 
+//Handlebars
 app.engine("handlebars", handlebars.engine())
 app.set('views', __dirname + '/views')
 app.set('view engine', 'handlebars')
@@ -69,8 +72,8 @@ Handlebars.registerHelper('showHeader', function (options) {
     }
 })
 
+//Routes
 app.use(express.static(__dirname + '/public'))
-
 app.use("/", viewsRouter)
 app.use("/api/users", userRouter)
 app.use("/api/session", sessionRouter)

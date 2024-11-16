@@ -5,5 +5,4 @@ Crear checkout
 Agregar mailing
 
 
-Empezar arquitectura de cart y order
-Revisar arquitectura de views
+Empezar arquitectura de order

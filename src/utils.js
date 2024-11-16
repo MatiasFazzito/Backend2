@@ -4,14 +4,16 @@ import bcrypt from "bcrypt"
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
 
+const PRIVATE_KEY = "secretoCoder"
+
+//Pathing
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
+//Authentication
 export const createHash = password => bcrypt.hashSync(password, bcrypt.genSaltSync(10))
 
 export const isValidPassword = (user, password) => bcrypt.compareSync(password, user.password)
-
-const PRIVATE_KEY = "secretoCoder"
 
 export const generateToken = (user) => {
     return jwt.sign({ user }, PRIVATE_KEY, { expiresIn: "24h" })
@@ -33,6 +35,7 @@ export const passportCall = (strategy) => {
     }
 }
 
+//Authorization
 export const handlePolicies = (policies)=>{
     return (req, res, next)=>{
         if (policies.includes("PUBLIC")) {
