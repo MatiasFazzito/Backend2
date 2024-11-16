@@ -2,10 +2,9 @@ import CartModel from "../models/cart.model.js"
 
 export default class Cart {
 
-    getCartById = async () => {
+    getCartById = async (id) => {
         try {
-            const cartId = req.session.user.cart
-            const cart = await CartModel.findOne({ _id: cartId }).populate("products.product")
+            const cart = await CartModel.findOne({ _id: id }).populate("products.product")
 
             return cart
         } catch (error) {
@@ -15,9 +14,7 @@ export default class Cart {
 
     deleteCart = async (id) => {
         try {
-            const { cid } = req.params
-
-            const cart = await CartModel.deleteOne({ _id: cid })
+            const cart = await CartModel.findOne({ _id: id })
 
             cart.products = []
             await cart.save()
@@ -27,10 +24,8 @@ export default class Cart {
         }
     }
 
-    deleteProductFromCart = async () => {
+    deleteProductFromCart = async (cid, pid) => {
         try {
-            const { cid, pid } = req.params
-
             const cart = await CartModel.findOne({ _id: cid })
 
             const productIndex = cart.products.findIndex(p => p._id.toString() === pid)
