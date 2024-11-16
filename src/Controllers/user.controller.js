@@ -41,11 +41,11 @@ export const updateUser = async (req, res) => {
 
         for (const key in updates) {
             if (updates.hasOwnProperty(key) && updates[key] !== '') {
-                updateData.$set[key] = updates[key];
+                updateData.$set[key] = updates[key]
             }
         }
 
-        const user = await userService.updateUser(uid, updateData)
+        await userService.updateUser(uid, updateData)
 
         res.redirect("/")
     } catch (error) {
@@ -55,11 +55,7 @@ export const updateUser = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
     try {
-        const currentUser = req.session.user
         const { uid } = req.params
-        if (currentUser.role == "admin") {
-            currentUser.isValid = true
-        }
 
         await userService.deleteUser(uid)
 

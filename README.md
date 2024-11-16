@@ -5,5 +5,5 @@ Crear checkout
 Agregar mailing
 
 
-Colocar la logica de paginate en el controller
-Colocar la logica de identificacion de usuario, etc en controllers
+Empezar arquitectura de cart y order
+Revisar arquitectura de views

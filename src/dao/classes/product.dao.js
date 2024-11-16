@@ -2,7 +2,17 @@ import ProductModel from "../models/product.model.js"
 import CartModel from "../models/cart.model.js"
 
 export default class Product {
-    getProducts = async () => {
+    createProduct = async (body) => {
+        try {
+            const newProduct = await ProductModel.create(body)
+
+            return newProduct
+        } catch (error) {
+            return null
+        }
+    }
+
+    getProducts = async (req) => {
         try {
             const page = parseInt(req.query.page) || 1
             const rows = parseInt(req.query.rows) || 5
@@ -27,6 +37,8 @@ export default class Product {
 
             return products
         } catch (error) {
+            console.log(error);
+
             return null
         }
     }
@@ -35,9 +47,16 @@ export default class Product {
         try {
             const product = await ProductModel.findOne({ _id: id })
 
-            if (!product) {
-                return res.render('error', { error: 'Producto no encontrado' })
-            }
+            return product
+
+        } catch (error) {
+            return null
+        }
+    }
+
+    updateProduct = async (id, updateData) => {
+        try {
+            const product = await ProductModel.updateOne({ _id: id }, updateData)
 
             return product
 
@@ -46,33 +65,19 @@ export default class Product {
         }
     }
 
-    /*updateProduct = async (id, user) => {
-        try {
-            
-        } catch (error) {
-            return null
-        }
-    }*/
-
     deleteProduct = async (id) => {
         try {
-            const product = await ProductModel.deleteOne({ _id: id })
+            await ProductModel.deleteOne({ _id: id })
 
-            if (!product) {
-                return res.render('error', { error: 'Producto no encontrado' })
-            }
         } catch (error) {
             return null
         }
     }
 
-    addProductToCart = async (id) => {
+    addProductToCart = async (id, quantity, cartId) => {
         try {
-            const { quantity = 1 } = req.body
-            const cartId = req.session.user.cart
-
             const product = await ProductModel.findOne({ _id: id })
-            const cart = await CartModel.findById(cartId)
+            const cart = await CartModel.findOne({ _id: cartId })
 
             const productIndex = cart.products.findIndex(item => item.product.toString() === product._id.toString())
 

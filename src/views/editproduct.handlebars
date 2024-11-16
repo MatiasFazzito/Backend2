@@ -1,0 +1,25 @@
+<div class="editContainer">
+    <form class="editForm" method="POST" action="/api/products/{{product}}?_method=PUT">
+
+        <label for="title">Nombre</label>
+        <input type="text" name="title" id="title">
+
+        <label for="description">Descripcion</label>
+        <input type="text" name="description" id="description">
+
+        <label for="code">Codigo</label>
+        <input type="text" name="code" id="code">
+
+        <label for="price">Precio</label>
+        <input type="number" name="price" id="price">
+
+        <label for="stock">Stock</label>
+        <input type="number" name="stock" id="stock">
+
+        <label for="category">Categoria</label>
+        <input type="text" name="category" id="category">
+
+        <button class="registerButton" type="submit">Register</button>
+    </form>
+    <h1 class="warning">Al actualizar los datos de producto se solicitara iniciar sesion nuevamente</h1>
+</div>

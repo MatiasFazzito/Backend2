@@ -41,6 +41,12 @@ router.get("/edituser/:uid", passportCall("jwt"), handlePolicies(["user", "VIP",
     res.render("edituser", { user, currentUser })
 })
 
+router.get("/editproduct/:pid", passportCall("jwt"), handlePolicies(["admin"]), (req, res) => {
+    const product = req.params.pid
+
+    res.render("editproduct", { product })
+})
+
 //Ruta en construccion
 router.get("/checkout", passportCall("jwt"), handlePolicies(["user", "VIP"]), (req, res) => {
     const user = req.session.user

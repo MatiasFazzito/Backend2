@@ -479,7 +479,7 @@ body .editContainer{
     text-align: center;
 }
 
-body .editUser {
+body .editForm {
     display: flex;
     flex-direction: column;
     border: 1px solid #000000;
@@ -488,14 +488,14 @@ body .editUser {
     background-color: #B0C0BC;
 }
 
-body .editUser input {
+body .editForm input {
     height: 1.5rem;
     margin: 1%;
     font-size: 1rem;
     font-weight: bold;
 }
 
-body .editUser button {
+body .editForm button {
     width: 30%;
     height: 1.5rem;
     background-color: #C1EDCC;
