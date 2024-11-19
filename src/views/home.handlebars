@@ -5,11 +5,15 @@
 
         <button><a href="/api/products">Ver listado de productos</a></button>
 
-        <button><a href="/checkout">Checkout</a></button>
+        <button><a href="/api/cart">Ver carrito</a></button>
 
         {{#if currentUser.isValid}}
         <button><a href="/api/users">Ver listado de usuarios</a></button>
-        
+
+        <button><a href="/api/tickets">Ver tickets</a></button>
+        {{/if}}
+
+        {{#if currentUser.isAdmin}}
         <button><a href="/addproduct">Agregar productos</a></button>
         {{/if}}
     </nav>

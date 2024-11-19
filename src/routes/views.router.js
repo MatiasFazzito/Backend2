@@ -19,15 +19,17 @@ router.get("/login", (req, res) => {
 //Home
 router.get("/home", passportCall("jwt"), handlePolicies(["user", "VIP", "admin"]), (req, res) => {
     const currentUser = req.session.user
-    if (currentUser.role == "admin"|| currentUser.role == "VIP") {
+    if (currentUser.role == "admin" || currentUser.role == "VIP") {
         currentUser.isValid = true
     }
+
+    currentUser.isAdmin = currentUser.role === "admin"
 
     res.render("home", { currentUser, currentPage: 'landing' })
 })
 
 //Admin Views
-router.get('/addproduct', passportCall("jwt"), handlePolicies([ "admin"]), (req, res) => {
+router.get('/addproduct', passportCall("jwt"), handlePolicies(["VIP", "admin"]), (req, res) => {
     res.render('addproduct')
 })
 
@@ -53,9 +55,7 @@ router.get("/edituser/:uid", passportCall("jwt"), handlePolicies(["user", "VIP",
 
 //Ruta en construccion
 router.get("/checkout", passportCall("jwt"), handlePolicies(["user", "VIP"]), (req, res) => {
-    const user = req.session.user
-
-    res.render("checkout", user)
+    res.render("checkout")
 })
 
 

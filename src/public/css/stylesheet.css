@@ -60,6 +60,7 @@ body .landing {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    text-align: center;
     border: 2px solid black;
     font-size: 1rem;
     background-color: #B0C0BC;
@@ -323,6 +324,7 @@ body .listContainer .card button a {
 }
 
 body .listContainer .productPagination {
+    justify-self: center;
     align-self: center;
     width: 30%;
     display: flex;

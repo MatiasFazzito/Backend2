@@ -11,11 +11,11 @@ export const createTicket = async (req, res) => {
         const products = cart.products
         const amount = cart.amount
 
-        await ticketService.createTicket(purchaser, products, amount )
+        await ticketService.createTicket(purchaser, products, amount)
 
         await cartService.deleteCart(req.session.user.cart)
 
-        res.redirect("/home")
+        res.redirect("/checkout")
     } catch (error) {
 
         res.render("error", { error: "Error al crear ticket de compra" })
@@ -40,7 +40,9 @@ export const getTicketById = async (req, res) => {
 
         const ticket = await ticketService.getTicketById(tid)
 
-        currentUser.isValid = currentUser.role == "admin"
+        if (currentUser.role == "admin" || currentUser.role == "VIP") {
+            currentUser.isValid = true
+        }
 
         res.render("ticket", { ticket: ticket.toObject(), currentUser })
     } catch (error) {
@@ -50,13 +52,12 @@ export const getTicketById = async (req, res) => {
 
 export const resolveTicket = async (req, res) => {
     try {
-        const currentUser = req.session.user
         const { tid } = req.params
 
-        const ticket = await ticketService.resolveTicket(tid)
+        await ticketService.resolveTicket(tid)
 
-        res.render("tickets") //PROBAR SI FUNCIONA Y APLICAR LOGICA DE MAILING
-        
+        res.redirect("/api/tickets") //APLICAR LOGICA DE MAILING
+
     } catch (error) {
         res.render("error", { error: "Error al resolver ticket" })
     }
