@@ -1,10 +1,9 @@
-<div class="productList">
+<div class="listContainer">
     {{#if products.isValid}}
-    <div class="productContainer">
         <h1>Lista de productos</h1>
         <ul>
             {{#each products.docs}}
-            <li class='productCard'>
+            <li class='card'>
                 <h2>{{this.title}}</h2>
                 <p>Precio: ${{this.price}}</p>
                 <p>Descripción: {{this.description}}</p>

@@ -39,12 +39,4 @@ export default class Cart {
             return null
         }
     }
-
-    /*checkout = async ()=>{
-        try {
-            
-        } catch (error) {
-            
-        }
-    }*/
 }

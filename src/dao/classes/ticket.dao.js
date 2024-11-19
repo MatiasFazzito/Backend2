@@ -1,10 +1,29 @@
-import TicketsModel from "../models/ticket.model.js";
+import { DateTime } from "luxon"
+import TicketsModel from "../models/ticket.model.js"
+
 
 export default class Ticket {
+    createTicket = async (purchaser, products, amount) => {
+        try {
+
+            const newTicket = { purchaser, products, amount }
+
+            const result = await TicketsModel.create(newTicket)
+
+            return result
+        } catch (error) {
+
+            return null
+        }
+    }
 
     getTickets = async () => {
         try {
-            const result = await TicketsModel.find()
+            const result = await TicketsModel.find().populate("products.product").populate("purchaser").lean()
+
+            result.forEach(ticket => {
+                ticket.purchaseDatetime = DateTime.fromISO(ticket.purchaseDatetime).setLocale("es").toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY)
+            })
 
             return result
         } catch (error) {
@@ -15,29 +34,19 @@ export default class Ticket {
 
     getTicketById = async (id) => {
         try {
-            const result = await TicketsModel.findOne({ _id: id })
-            
+            const result = await TicketsModel.findOne({ _id: id }).populate("products.product").populate('purchaser')
+
+            result.purchaseDatetime = DateTime.fromISO(result.purchaseDatetime).setLocale("es").toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY)
+
             return result
         } catch (error) {
-
             return null
         }
     }
 
-    createTicket = async (ticket) => {
+    resolveTicket = async (id) => {
         try {
-            const result = await TicketsModel.create(ticket)
-
-            return result
-        } catch (error) {
-
-            return null
-        }
-    }
-
-    resolveTicket = async (id, ticket) => {
-        try {
-            const result = await TicketsModel.updateOne({ _id: id }, { $set: ticket })
+            const result = await TicketsModel.findOneAndUpdate({ _id: id }, { $set: { status: "resolved" } })
 
             return result
         } catch (error) {

@@ -80,10 +80,10 @@ const initializePassport = () => {
     }, async (accessToken, refreshToken, profile, done) => {
         try {
             const user = await UserModel.findOne({ email: profile._json.email })
-            const newcart = new CartModel()
-            await newcart.save()
 
             if (!user) {
+                const newcart = new CartModel()
+            await newcart.save()
                 const newUser = {
                     firstName: profile._json.name,
                     lastName: "",

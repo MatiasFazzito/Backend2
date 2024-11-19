@@ -1,9 +1,8 @@
-<div>
-    <h1>Listado de usuarios</h1>
-    <div class="userContainer">
+<div class="listContainer">
+        <h1>Listado de usuarios</h1>
         <ul>
             {{#each users}}
-            <li class='usersCard'>
+            <li class='card'>
                 <h2>Nombre: {{this.firstName}}</h2>
                 <p>Apellido: {{this.lastName}}</p>
                 <p>edad: {{this.age}}</p>
@@ -12,5 +11,4 @@
             </li>
             {{/each}}
         </ul>
-    </div>
 </div>

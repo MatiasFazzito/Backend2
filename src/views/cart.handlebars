@@ -1,9 +1,9 @@
-<div class='cart'>
-    {{#if cart.products}}
-    <h1>Bienvenido a tu carrito</h1>
-    <ul class="productList">
+<div class="cart">
+    <div class='listContainer'>
+        {{#if cart.products}}
+        <h1>Bienvenido a tu carrito</h1>
         {{#each cart.products}}
-        <li class="productDetail">
+        <li class="card">
             <p>Producto: {{this.product.title}}</p>
             <p>Precio unitario: ${{this.product.price}}</p>
             <p>Cantidad: {{this.quantity}}</p>
@@ -14,12 +14,17 @@
             </form>
         </li>
         {{/each}}
-    </ul>
-    <form class="cleanCart" action='/api/cart/{{cart._id}}?_method=DELETE' method='POST'
-        enctype='application/x-www-form-urlencoded'>
-        <input type='hidden' name='_method' value='DELETE'>
-        <button type='submit'>Vaciar carrito</button>
-    </form>
+        </ul>
+    </div>
+    <div class="function">
+        <form action='/api/cart/{{cart._id}}?_method=DELETE' method='POST' enctype='application/x-www-form-urlencoded'>
+            <input type='hidden' name='_method' value='DELETE'>
+            <button type='submit'>Vaciar carrito</button>
+        </form>
+        <form action="/api/cart/{{cart._id}}/purchase" method='POST' enctype='application/x-www-form-urlencoded'>
+            <button type="submit">Generar ticket de compra</button>
+        </form>
+    </div>
     {{else}}
     <h1>Tu carrito esta vacio!</h1>
     <button class="emptyCart"><a href="/api/products">Vamos a llenarlo!</a></button>
