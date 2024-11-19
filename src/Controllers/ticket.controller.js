@@ -55,7 +55,7 @@ export const resolveTicket = async (req, res) => {
 
         const ticket = await ticketService.resolveTicket(tid)
 
-        res.render("tickets") //PROBAR SI FUNCIONA
+        res.render("tickets") //PROBAR SI FUNCIONA Y APLICAR LOGICA DE MAILING
         
     } catch (error) {
         res.render("error", { error: "Error al resolver ticket" })

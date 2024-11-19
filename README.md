@@ -1,8 +1,5 @@
 TO DO LIST
 
-Implementar arquitectura por capas
-Crear checkout
+Modificar checkout para acceder a tickets
+Aplicar DTO y Repository
 Agregar mailing
-
-
-Empezar arquitectura de order
