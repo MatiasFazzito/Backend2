@@ -2,31 +2,34 @@
     <div class='listContainer'>
         {{#if cart.products}}
         <h1>Bienvenido a tu carrito</h1>
-        {{#each cart.products}}
-        <li class="card">
-            <p>Producto: {{this.product.title}}</p>
-            <p>Precio unitario: ${{this.product.price}}</p>
-            <p>Cantidad: {{this.quantity}}</p>
-            <form action="/api/cart/{{../cart._id}}/product/{{this.product._id}}?_method=DELETE" method="post"
-                enctype='application/x-www-form-urlencoded'>
-                <input type='hidden' name='_method' value='DELETE'>
-                <button type='submit'>Eliminar producto de carrito</button>
-            </form>
-        </li>
-        {{/each}}
+        <ul>
+            {{#each cart.products}}
+            <li class="card">
+                <p>Producto: {{product}}</p>
+                <p>Precio unitario: ${{price}}</p>
+                <p>Cantidad: {{quantity}}</p>
+                <form action="/api/cart/{{../cart.id}}/product/{{this.product.id}}?_method=DELETE" method="post"
+                    enctype='application/x-www-form-urlencoded'>
+                    <input type='hidden' name='_method' value='DELETE'>
+                    <button type='submit'>Eliminar producto de carrito</button>
+                </form>
+            </li>
+            {{/each}}
         </ul>
     </div>
     <div class="function">
-        <form action='/api/cart/{{cart._id}}?_method=DELETE' method='POST' enctype='application/x-www-form-urlencoded'>
+        <form action='/api/cart/{{cart.id}}?_method=DELETE' method='POST' enctype='application/x-www-form-urlencoded'>
             <input type='hidden' name='_method' value='DELETE'>
             <button type='submit'>Vaciar carrito</button>
         </form>
-        <form action="/api/cart/{{cart._id}}/purchase" method='POST' enctype='application/x-www-form-urlencoded'>
+        <form action="/api/cart/{{cart.id}}/purchase" method='POST' enctype='application/x-www-form-urlencoded'>
             <button type="submit">Generar ticket de compra</button>
         </form>
     </div>
     {{else}}
-    <h1>Tu carrito esta vacio!</h1>
-    <button class="emptyCart"><a href="/api/products">Vamos a llenarlo!</a></button>
+    <div>
+        <h1>Tu carrito esta vacio!</h1>
+        <button class="emptyCart"><a href="/api/products">Vamos a llenarlo!</a></button>
+    </div>
     {{/if}}
 </div>

@@ -8,7 +8,7 @@ body {
     line-height: 1.6;
     background-color: #A7A7A9;
     font-size: 1.5rem;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 body .header {
@@ -258,9 +258,7 @@ body .cart {
     justify-content: space-between;
     align-items: center;
     text-align: center;
-    border: 2px solid black;
     font-size: 1rem;
-    background-color: #B0C0BC;
 }
 
 body .cart .function {
@@ -289,11 +287,19 @@ body .cart .emptyCart a {
     color: #000000;
 }
 
-body .listContainer {
+body .products{
+    margin: 1%;
+    padding: 1%;
+}
+
+body .listContainer { 
     width: 100%;
     display: flex;
     flex-direction: column;
-    margin-bottom: 5%;
+    align-items: center;
+}
+body .listContainer ul{
+    width: 80%;
 }
 
 body .listContainer h1 {
@@ -323,18 +329,9 @@ body .listContainer .card button a {
     color: #000000;
 }
 
-body .listContainer .productPagination {
-    justify-self: center;
-    align-self: center;
-    width: 30%;
-    display: flex;
-    justify-content: space-evenly;
-}
-
 body .listContainer .ticket {
     margin: 1%;
     padding: 1%;
-    height: 50vh;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -357,8 +354,10 @@ body .listContainer .ticket button a {
 body .productDetail {
     margin: 1%;
     padding: 1%;
+    width: min-content;
     min-width: 300px;
     align-self: center;
+    justify-self: center;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -501,11 +500,10 @@ body footer {
     position: fixed;
     bottom: 0;
     text-align: center;
-    margin: 0;
     background-color: #453F3C;
     color: #ffffff;
     font-weight: bold;
-    font-size: 2rem;
+    font-size: 1.5rem;
     width: 100%;
     height: 5%;
 }

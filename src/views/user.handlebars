@@ -3,12 +3,12 @@
     <h2 class="title">Nombre: {{user.firstName}}</h2>
     <p>Apellido: {{user.lastName}}</p>
     <p>Edad: {{user.age}}</p>
-    <p>ID: {{user._id}}</p>
+    <p>ID: {{user.id}}</p>
     <p>email: {{user.email}}</p>
-    <button><a href="/editUser/{{user._id}}">Editar usuario</a></button>
+    <button><a href="/editUser/{{user.id}}">Editar usuario</a></button>
 
     {{#if currentUser.isValid}}
-    <form action='/api/users/{{user._id}}?_method=DELETE' method='POST' enctype='application/x-www-form-urlencoded'>
+    <form action='/api/users/{{user.id}}?_method=DELETE' method='POST' enctype='application/x-www-form-urlencoded'>
         <input type='hidden' name='_method' value='DELETE'>
         <button type='submit'>Eliminar usuario</button>
     </form>

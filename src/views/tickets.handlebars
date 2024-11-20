@@ -1,6 +1,6 @@
-<div class="listContainer">
-    <h1>Listado de tickets</h1>
-    <div class="cardContainer">
+<div class="tickets">
+    <div class="listContainer">
+        <h1>Listado de tickets</h1>
         <ul>
             {{#each tickets}}
             <li class='card'>
@@ -8,7 +8,7 @@
                 <p>Fecha: {{this.purchaseDatetime}}</p>
                 <p>Total: {{this.amount}}</p>
                 <p>Status: {{this.status}}</p>
-                <button><a href='/api/tickets/{{this._id}}'>Ver detalle</a></button>
+                <button><a href='/api/tickets/{{this.id}}'>Ver detalle</a></button>
             </li>
             {{/each}}
         </ul>

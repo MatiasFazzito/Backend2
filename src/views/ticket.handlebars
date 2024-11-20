@@ -3,13 +3,13 @@
         <h2>N° de Ticket: {{ticket.code}}</h2>
         <p>Fecha: {{ticket.purchaseDatetime}}</p>
         {{#each ticket.products}}
-        <p>producto: {{product.title}}</p>
+        <p>producto: {{product}}</p>
         <p>cantidad: {{quantity}}</p>
         {{/each}}
         <p>Total: {{ticket.amount}}</p>
-        <p>Comprador: {{ticket.purchaser.email}}</p>
+        <p>Comprador: {{ticket.purchaser}}</p>
         {{#if currentUser.isValid}}
-        <form action="/api/tickets/{{ticket._id}}/resolve?_method=PUT" method="POST" enctype='application/x-www-form-urlencoded'>
+        <form action="/api/tickets/{{ticket.id}}/resolve?_method=PUT" method="POST" enctype='application/x-www-form-urlencoded'>
             <input type='hidden' name='_method' value='PUT'>
             <button type='submit'>Resolve ticket</button>
         </form>

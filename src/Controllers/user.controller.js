@@ -1,4 +1,5 @@
-import User from "../dao/classes/user.dao.js"
+import User from "../dao/mongo/classes/user.dao.js"
+import UserDto from '../dao/DTOs/user.dto.js'
 
 const userService = new User()
 
@@ -10,8 +11,9 @@ export const getUsers = async (req, res) => {
         }
 
         const users = await userService.getUsers()
+        const userDtos = users.map(user => new UserDto(user))
 
-        res.render("users", { users, currentUser })
+        res.render("users", { users: userDtos, currentUser })
     } catch (error) {
         res.render("error", { error: "Error al obtener usuarios" })
     }
@@ -21,13 +23,15 @@ export const getUserById = async (req, res) => {
     try {
         const currentUser = req.session.user
         const { uid } = req.params
+        
         const user = await userService.getUserById(uid)
+        const userDto = new UserDto(user)
 
         if (currentUser.role == "admin") {
             currentUser.isValid = true
         }
 
-        res.render("user", { user, currentUser })
+        res.render("user", { user: userDto, currentUser })
     } catch (error) {
         res.render("error", { error: "Error al obtener usuario" })
     }

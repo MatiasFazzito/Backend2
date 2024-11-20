@@ -10,13 +10,7 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "carts"
     },
-    role: { type: String, default: "user" },
-    tickets: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "tickets"
-        }
-    ]
+    role: { type: String, default: "user" }
 })
 
 const UserModel = mongoose.model("users", userSchema)

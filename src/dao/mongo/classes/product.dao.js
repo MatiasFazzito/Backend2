@@ -14,30 +14,10 @@ export default class Product {
 
     getProducts = async (req) => {
         try {
-            const page = parseInt(req.query.page) || 1
-            const rows = parseInt(req.query.rows) || 5
-            const category = req.query.category
-            const sortField = req.query.sortField || 'price'
-            const sortOrder = req.query.sortOrder || 'asc'
-
-            const options = {
-                page,
-                limit: rows,
-                sort: { [sortField]: sortOrder === 'asc' ? 1 : -1 },
-                filter: category ? { category } : {},
-                lean: true
-            }
-
-            const products = await ProductModel.paginate(category ? { category } : {}, options)
-
-            products.prevLink = products.hasPrevPage ? `/api/products?page=${products.prevPage}&sortOrder=${sortOrder}&${category ? `category=${category}` : 'category='}` : ''
-            products.nextLink = products.hasNextPage ? `/api/products?page=${products.nextPage}&sortOrder=${sortOrder}&${category ? `category=${category}` : 'category='}` : ''
-
-            products.isValid = products.docs.length > 0
+            const products = await ProductModel.find()
 
             return products
         } catch (error) {
-            console.log(error);
 
             return null
         }

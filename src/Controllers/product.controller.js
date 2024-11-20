@@ -1,4 +1,5 @@
-import Product from "../dao/classes/product.dao.js"
+import Product from "../dao/mongo/classes/product.dao.js"
+import ProductDto from "../dao/DTOs/product.dto.js"
 
 const productService = new Product()
 
@@ -17,10 +18,15 @@ export const createProduct = async (req, res) => {
 export const getProducts = async (req, res) => {
     try {
         const products = await productService.getProducts(req)
+        const productDtos = products.map(product => new ProductDto(product))
 
-        res.render('products', { products })
+        productDtos.isValid = productDtos.length > 0
+
+        res.render('products', { products: productDtos })
 
     } catch (error) {
+        console.log(error);
+        
         res.render('error', { error: 'Error al buscar productos' })
     }
 }
@@ -31,9 +37,10 @@ export const getProductById = async (req, res) => {
         const { pid } = req.params
 
         const product = await productService.getProductById(pid)
+        const productDto = new ProductDto(product)
 
         currentUser.isValid = currentUser.role == "admin"
-        res.render('product', { product: product.toObject(), currentUser })
+        res.render('product', { product: productDto, currentUser })
 
     } catch (error) {
         res.render('error', { error: 'Error al buscar producto' })

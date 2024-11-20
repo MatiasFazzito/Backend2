@@ -1,5 +1,6 @@
-import Ticket from "../dao/classes/ticket.dao.js"
-import Cart from "../dao/classes/cart.dao.js";
+import Ticket from "../dao/mongo/classes/ticket.dao.js"
+import Cart from "../dao/mongo/classes/cart.dao.js"
+import TicketDto from "../dao/DTOs/ticket.dto.js"
 
 const ticketService = new Ticket()
 const cartService = new Cart()
@@ -25,8 +26,9 @@ export const createTicket = async (req, res) => {
 export const getTickets = async (req, res) => {
     try {
         const tickets = await ticketService.getTickets()
+        const ticketDtos = tickets.map(ticket => new TicketDto(ticket))
 
-        res.render("tickets", { tickets })
+        res.render("tickets", { tickets: ticketDtos })
     } catch (error) {
         res.render("error", { error: "Error al obtener tickets" })
     }
@@ -39,12 +41,13 @@ export const getTicketById = async (req, res) => {
         const { tid } = req.params
 
         const ticket = await ticketService.getTicketById(tid)
-
+        const ticketDto = new TicketDto(ticket)
+        
         if (currentUser.role == "admin" || currentUser.role == "VIP") {
             currentUser.isValid = true
         }
 
-        res.render("ticket", { ticket: ticket.toObject(), currentUser })
+        res.render("ticket", { ticket: ticketDto, currentUser })
     } catch (error) {
         res.render("error", { error: "Error al obtener ticket" })
     }

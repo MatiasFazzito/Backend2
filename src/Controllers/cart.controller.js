@@ -1,4 +1,5 @@
-import Cart from "../dao/classes/cart.dao.js"
+import Cart from "../dao/mongo/classes/cart.dao.js"
+import CartDto from "../dao/DTOs/cart.dto.js"
 
 const cartService = new Cart()
 
@@ -7,8 +8,9 @@ export const getCart = async (req, res) => {
         const cartId = req.session.user.cart
 
         const cart = await cartService.getCartById(cartId)
+        const cartDto = new CartDto(cart)
 
-        res.render("cart", { cart: cart.toObject() })
+        res.render("cart", { cart: cartDto })
 
     } catch (error) {
         res.render('error', { error: 'Error al mostrar carrito' })

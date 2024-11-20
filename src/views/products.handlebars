@@ -1,27 +1,21 @@
-<div class="listContainer">
-    {{#if products.isValid}}
-    <h1>Lista de productos</h1>
-    <ul>
-        {{#each products.docs}}
-        <li class='card'>
-            <h2>{{this.title}}</h2>
-            <p>Precio: ${{this.price}}</p>
-            <p>Descripción: {{this.description}}</p>
-            <p>Categoría: {{this.category}}</p>
-            <button><a href='/api/products/{{this._id}}'>Ver detalle</a></button>
-        </li>
-        {{/each}}
-    </ul>
-    <div class="productPagination">
-        {{#if products.hasPrevPage}}
-        <a href={{products.prevLink}}>Anterior</a>
-        {{/if}}
-        {{products.page}}
-        {{#if products.hasNextPage}}
-        <a href={{products.nextLink}}>Siguiente</a>
-        {{/if}}
+<div class="products">
+    <div class="listContainer">
+        {{#if products.isValid}}
+        <h1>Lista de productos</h1>
+        <ul>
+            {{#each products}}
+            <li class='card'>
+                <h2>{{this.title}}</h2>
+                <p>Precio: ${{this.price}}</p>
+                <p>Descripción: {{this.description}}</p>
+                <p>Categoría: {{this.category}}</p>
+                <button><a href='/api/products/{{this.id}}'>Ver detalle</a></button>
+            </li>
+            {{/each}}
+        </ul>
     </div>
 </div>
+
 {{else}}
 <h1>No hay productos para mostrar</h1>
 {{/if}}

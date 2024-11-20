@@ -4,13 +4,13 @@
     <p class='description'>{{product.description}}</p>
     <p>Categoria: {{product.category}}</p>
 
-    <form action='/api/products/{{product._id}}/addtocart' method="POST" enctype="application/x-www-form-urlencoded">
+    <form action='/api/products/{{product.id}}/addtocart' method="POST" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="quantity" value="1">
         <button type="submit">Agregar al carrito</button>
     </form>
     {{#if currentUser.isValid}}
-    <button><a href="/editproduct/{{product._id}}">Editar Producto</a></button>
-    <form action='/api/products/{{product._id}}?_method=DELETE' method='POST' enctype='application/x-www-form-urlencoded'>
+    <button><a href="/editproduct/{{product.id}}">Editar Producto</a></button>
+    <form action='/api/products/{{product.id}}?_method=DELETE' method='POST' enctype='application/x-www-form-urlencoded'>
         <input type='hidden' name='_method' value='DELETE'>
         <button type='submit'>Eliminar producto</button>
     </form>
