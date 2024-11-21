@@ -15,6 +15,8 @@ const MAILINGPASS = process.env.MAILINGPASS
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
+export default __dirname
+
 //Authentication
 export const createHash = password => bcrypt.hashSync(password, bcrypt.genSaltSync(10))
 
@@ -64,6 +66,7 @@ export const handlePolicies = (policies)=>{
     }
 }
 
+//Mailing
 export const transport = nodemailer.createTransport({
     service:"gmail",
     port: 587,
@@ -72,5 +75,3 @@ export const transport = nodemailer.createTransport({
         pass:  MAILINGPASS
     }
 })
-
-export default __dirname
