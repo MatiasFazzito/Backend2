@@ -13,6 +13,10 @@ export const createTicket = async (req, res) => {
         const products = cart.products
         const amount = cart.amount
 
+        if (!products || products.length === 0) {
+            return res.render("error",{ error: 'El carrito está vacío' })
+        }
+
         await ticketService.createTicket(purchaser, products, amount)
 
         await cartService.deleteCart(req.session.user.cart)
