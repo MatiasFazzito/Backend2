@@ -3,8 +3,13 @@ import { fileURLToPath } from 'url'
 import bcrypt from "bcrypt"
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
+import nodemailer from "nodemailer"
 
-const PRIVATE_KEY = "secretoCoder"
+//.env
+process.loadEnvFile()
+const PRIVATE_KEY = process.env.PRIVATE_KEY
+const MAILING = process.env.MAILING
+const MAILINGPASS = process.env.MAILINGPASS
 
 //Pathing
 const __filename = fileURLToPath(import.meta.url)
@@ -58,5 +63,14 @@ export const handlePolicies = (policies)=>{
         }
     }
 }
+
+export const transport = nodemailer.createTransport({
+    service:"gmail",
+    port: 587,
+    auth: {
+        user: MAILING,
+        pass:  MAILINGPASS
+    }
+})
 
 export default __dirname

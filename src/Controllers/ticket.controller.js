@@ -1,6 +1,7 @@
 import Ticket from "../dao/mongo/classes/ticket.dao.js"
 import Cart from "../dao/mongo/classes/cart.dao.js"
 import TicketDto from "../dao/DTOs/ticket.dto.js"
+import { transport } from "../utils.js"
 
 const ticketService = new Ticket()
 const cartService = new Cart()
@@ -57,9 +58,22 @@ export const resolveTicket = async (req, res) => {
     try {
         const { tid } = req.params
 
-        await ticketService.resolveTicket(tid)
+        const ticket = await ticketService.resolveTicket(tid)
+        const resolvedTicket = TicketDto(ticket)
 
-        res.redirect("/api/tickets") //APLICAR LOGICA DE MAILING
+        await transport.sendMail({
+            from: "dev testing",
+            to: `${resolvedTicket.purchaser}`,
+            subject: "Compra confirmada: #" + resolvedTicket.id,
+            html: `
+            <h1>Ticket ID: ${resolvedTicket.id}</h1>
+            <h2>Fecha de compra: ${resolvedTicket.purchaseDatetime}</h2>
+            <p>Productos: ${resolvedTicket.products}</p>
+            <h2>Total: ${resolvedTicket.amount}</h2>
+            `
+        })
+
+        res.redirect("/api/tickets") //REVISAR LOGICA DE MAILING
 
     } catch (error) {
         res.render("error", { error: "Error al resolver ticket" })

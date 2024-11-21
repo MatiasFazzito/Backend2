@@ -53,10 +53,4 @@ router.get("/edituser/:uid", passportCall("jwt"), handlePolicies(["user", "VIP",
     res.render("edituser", { user, currentUser })
 })
 
-//Ruta en construccion
-router.get("/checkout", passportCall("jwt"), handlePolicies(["user", "VIP"]), (req, res) => {
-    res.render("checkout")
-})
-
-
 export default router

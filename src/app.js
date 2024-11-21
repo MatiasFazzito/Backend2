@@ -23,6 +23,7 @@ const app = express()
 process.loadEnvFile()
 const PORT = process.env.PORT
 const URLConection = process.env.URLMONGO
+const PRIVATE_KEY = process.env.PRIVATE_KEY
 
 //Server config
 app.listen(PORT, () => {
@@ -47,7 +48,7 @@ app.use(session({
         },
         ttl: 1000
     }),
-    secret: "secretoCoder",
+    secret: PRIVATE_KEY,
     resave: false,
     saveUninitialized: false
 }))
