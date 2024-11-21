@@ -28,14 +28,13 @@ export default class Cart {
         try {
             const cart = await CartModel.findOne({ _id: cid })
 
-            const productIndex = cart.products.findIndex(p => p._id.toString() === pid)
-            if (!productIndex) {
-                return res.render("error", { error: 'Producto no encontrado en el carrito' })
-            }
+            const productIndex = cart.products.findIndex(p => p.product.toString() === pid)
 
             cart.products.splice(productIndex, 1)
             cart.save()
         } catch (error) {
+            console.log(error);
+            
             return null
         }
     }

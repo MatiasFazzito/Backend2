@@ -42,8 +42,8 @@ export const getTicketById = async (req, res) => {
         const { tid } = req.params
 
         const ticket = await ticketService.getTicketById(tid)
-        const ticketDto = new TicketDto(ticket)
-        
+        const ticketDto = new TicketDto(ticket)        
+
         if (currentUser.role == "admin" || currentUser.role == "VIP") {
             currentUser.isValid = true
         }
@@ -58,24 +58,29 @@ export const resolveTicket = async (req, res) => {
     try {
         const { tid } = req.params
 
-        const ticket = await ticketService.resolveTicket(tid)
-        const resolvedTicket = TicketDto(ticket)
+        const resolving = await ticketService.resolveTicket(tid)
+        const ticket = await ticketService.getTicketById(resolving)
+        const ticketDto = new TicketDto(ticket)
 
         await transport.sendMail({
             from: "dev testing",
-            to: `${resolvedTicket.purchaser}`,
-            subject: "Compra confirmada: #" + resolvedTicket.id,
+            to: `${ticketDto.purchaser}`,
+            subject: "Compra confirmada: #" + ticketDto.id,
             html: `
-            <h1>Ticket ID: ${resolvedTicket.id}</h1>
-            <h2>Fecha de compra: ${resolvedTicket.purchaseDatetime}</h2>
-            <p>Productos: ${resolvedTicket.products}</p>
-            <h2>Total: ${resolvedTicket.amount}</h2>
+            <h2>Ticket ID: ${ticketDto.id}</h2>
+            <h2>Fecha de compra: ${ticketDto.purchaseDatetime}</h2>
+            <p>Productos:</p>
+            <ul>
+                ${ticketDto.products.map(product => `<li>${product.product} (Cantidad: ${product.quantity})</li>`).join('')}
+            </ul>
+            <h2>Total: $${ticketDto.amount}</h2>
             `
         })
 
-        res.redirect("/api/tickets") //REVISAR LOGICA DE MAILING
+        res.redirect("/api/tickets")
 
     } catch (error) {
+        
         res.render("error", { error: "Error al resolver ticket" })
     }
 }
