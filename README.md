@@ -1,4 +1,4 @@
 TO DO LIST
 
-Aplicar DTO y Repository
+Aplicar Repository
 Revisar mailing
