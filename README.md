@@ -41,7 +41,7 @@ _Every funcionality can be tested with the several endpoints already included on
 
 ### Postman 🔩
 
-_PTo run tests on Postman you need to check the routes folder where you can find all the project routes_
+_To run tests on Postman you need to check the routes folder where you can find all the project routes_
 
 ### Browser ⌨️
 
