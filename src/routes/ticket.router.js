@@ -4,10 +4,10 @@ import { handlePolicies, passportCall } from "../utils.js"
 
 const router = Router()
 
-router.get("/", passportCall("jwt"), handlePolicies(["VIP", "admin"]), getTickets)
+router.get("/", passportCall("current"), handlePolicies(["VIP", "admin"]), getTickets)
 
-router.get("/:tid", passportCall("jwt"), handlePolicies(["user", "VIP", "admin"]), getTicketById)
+router.get("/:tid", passportCall("current"), handlePolicies(["user", "VIP", "admin"]), getTicketById)
 
-router.put("/:tid/resolve", passportCall("jwt"), handlePolicies(["VIP", "admin"]), resolveTicket)
+router.put("/:tid/resolve", passportCall("current"), handlePolicies(["VIP", "admin"]), resolveTicket)
 
 export default router

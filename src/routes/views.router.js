@@ -17,7 +17,7 @@ router.get("/login", (req, res) => {
 })
 
 //Home
-router.get("/home", passportCall("jwt"), handlePolicies(["user", "VIP", "admin"]), (req, res) => {
+router.get("/home", passportCall("current"), handlePolicies(["user", "VIP", "admin"]), (req, res) => {
     const currentUser = req.session.user
     if (currentUser.role == "admin" || currentUser.role == "VIP") {
         currentUser.isValid = true
@@ -29,23 +29,23 @@ router.get("/home", passportCall("jwt"), handlePolicies(["user", "VIP", "admin"]
 })
 
 //Admin Views
-router.get('/addproduct', passportCall("jwt"), handlePolicies(["VIP", "admin"]), (req, res) => {
+router.get('/addproduct', passportCall("current"), handlePolicies(["VIP", "admin"]), (req, res) => {
     res.render('addproduct')
 })
 
-router.get("/editproduct/:pid", passportCall("jwt"), handlePolicies(["admin"]), (req, res) => {
+router.get("/editproduct/:pid", passportCall("current"), handlePolicies(["admin"]), (req, res) => {
     const product = req.params.pid
 
     res.render("editproduct", { product })
 })
 
 //Authenticated Views
-router.get("/profile", passportCall("jwt"), handlePolicies(["user", "VIP", "admin"]), (req, res) => {
+router.get("/profile", passportCall("current"), handlePolicies(["user", "VIP", "admin"]), (req, res) => {
     const currentUser = req.session.user
     res.render("profile", { currentUser })
 })
 
-router.get("/edituser/:uid", passportCall("jwt"), handlePolicies(["user", "VIP", "admin"]), (req, res) => {
+router.get("/edituser/:uid", passportCall("current"), handlePolicies(["user", "VIP", "admin"]), (req, res) => {
     const user = req.params.uid
     const currentUser = req.session.user
     currentUser.isValid = currentUser.role === "admin"
@@ -53,7 +53,7 @@ router.get("/edituser/:uid", passportCall("jwt"), handlePolicies(["user", "VIP",
     res.render("edituser", { user, currentUser })
 })
 
-router.get("/checkout", passportCall("jwt"), handlePolicies(["user", "VIP"]), (req, res) => {
+router.get("/checkout", passportCall("current"), handlePolicies(["user", "VIP"]), (req, res) => {
     res.render("checkout")
 })
 

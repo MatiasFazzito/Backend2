@@ -10,10 +10,10 @@ router.get('/', getProducts)
 
 router.get("/:pid", getProductById)
 
-router.put("/:pid", passportCall("jwt"), handlePolicies(["admin"]), updateProduct)
+router.put("/:pid", passportCall("current"), handlePolicies(["admin"]), updateProduct)
 
-router.delete("/:pid", passportCall("jwt"), handlePolicies(["admin"]), deleteProduct)
+router.delete("/:pid", passportCall("current"), handlePolicies(["admin"]), deleteProduct)
 
-router.post('/:pid/addToCart', passportCall("jwt"), handlePolicies(["user", "VIP"]), addToCart)
+router.post('/:pid/addToCart', passportCall("current"), handlePolicies(["user", "VIP"]), addToCart)
 
 export default router

@@ -44,11 +44,6 @@ router.get("/githubcallback", passport.authenticate("github", { failureRedirect:
     res.redirect("/home")
 })
 
-router.get("/current", passportCall("jwt"), handlePolicies(["VIP", "admin"]), (req, res) => {
-    const user = req.user
-    res.send(user)
-})
-
 router.get("/logout", async (req, res) => {
     req.session.destroy(error => {
         if (!error) {

@@ -5,12 +5,12 @@ import { handlePolicies, passportCall } from "../utils.js"
 
 const router = Router()
 
-router.get("/",passportCall("jwt"), handlePolicies(["user", "VIP"]), getCart)
+router.get("/",passportCall("current"), handlePolicies(["user", "VIP"]), getCart)
 
-router.delete("/:cid",passportCall("jwt"), handlePolicies(["user", "VIP"]), clearCart)
+router.delete("/:cid",passportCall("current"), handlePolicies(["user", "VIP"]), clearCart)
 
-router.delete("/:cid/product/:pid",passportCall("jwt"), handlePolicies(["user", "VIP"]), deleteProductFromCart)
+router.delete("/:cid/product/:pid",passportCall("current"), handlePolicies(["user", "VIP"]), deleteProductFromCart)
 
-router.post("/:cid/purchase",passportCall("jwt"), handlePolicies(["user", "VIP"]), createTicket)
+router.post("/:cid/purchase",passportCall("current"), handlePolicies(["user", "VIP"]), createTicket)
 
 export default router

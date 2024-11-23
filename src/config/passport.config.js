@@ -6,6 +6,9 @@ import { createHash, isValidPassword } from "../utils.js"
 import CartModel from "../dao/mongo/models/cart.model.js"
 import UserModel from "../dao/mongo/models/user.model.js"
 
+process.loadEnvFile()
+const PRIVATE_KEY = process.env.PRIVATE_KEY
+
 const LocalStrategy = local.Strategy
 const JWTStrategy = jwt.Strategy
 const ExtractJWT = jwt.ExtractJwt
@@ -108,9 +111,9 @@ const initializePassport = () => {
     }
     ))
 
-    passport.use("jwt", new JWTStrategy({
+    passport.use("current", new JWTStrategy({
         jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
-        secretOrKey: "secretoCoder"
+        secretOrKey: PRIVATE_KEY
     }, async (jwt_payload, done) => {
         try {
             return done(null, jwt_payload)
