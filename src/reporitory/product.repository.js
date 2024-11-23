@@ -1,5 +1,5 @@
-import ProductModel from "../models/product.model.js"
-import CartModel from "../models/cart.model.js"
+import ProductModel from "../dao/mongo/models/product.model.js"
+import CartModel from "../dao/mongo/models/cart.model.js"
 
 export default class Product {
     createProduct = async (body) => {

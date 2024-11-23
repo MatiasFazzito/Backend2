@@ -1,5 +1,5 @@
-import Ticket from "../dao/mongo/classes/ticket.dao.js"
-import Cart from "../dao/mongo/classes/cart.dao.js"
+import Ticket from "../reporitory/ticket.repository.js"
+import Cart from "../reporitory/cart.repository.js"
 import TicketDto from "../dao/DTOs/ticket.dto.js"
 import { transport } from "../utils.js"
 

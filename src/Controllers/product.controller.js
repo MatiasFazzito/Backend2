@@ -1,4 +1,4 @@
-import Product from "../dao/mongo/classes/product.dao.js"
+import Product from "../reporitory/product.repository.js"
 import ProductDto from "../dao/DTOs/product.dto.js"
 
 const productService = new Product()

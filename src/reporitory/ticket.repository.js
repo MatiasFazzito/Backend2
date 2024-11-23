@@ -1,5 +1,5 @@
 import { DateTime } from "luxon"
-import TicketsModel from "../models/ticket.model.js"
+import TicketsModel from "../dao/mongo/models/ticket.model.js"
 
 
 export default class Ticket {

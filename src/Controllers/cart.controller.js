@@ -1,4 +1,4 @@
-import Cart from "../dao/mongo/classes/cart.dao.js"
+import Cart from "../reporitory/cart.repository.js"
 import CartDto from "../dao/DTOs/cart.dto.js"
 
 const cartService = new Cart()

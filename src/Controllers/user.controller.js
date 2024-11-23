@@ -1,4 +1,4 @@
-import User from "../dao/mongo/classes/user.dao.js"
+import User from "../reporitory/user.repository.js"
 import UserDto from '../dao/DTOs/user.dto.js'
 
 const userService = new User()
