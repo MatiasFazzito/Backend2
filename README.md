@@ -39,6 +39,8 @@ _In the .env.example file you will find all the global variables you need to run
 
 _Every funcionality can be tested with the several endpoints already included on the project_
 
+* **To test admin functions use admin@admin as login email and 123 as password**
+
 ### Postman 🔩
 
 _To run tests on Postman you need to check the routes folder where you can find all the project routes_

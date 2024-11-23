@@ -38,6 +38,8 @@ _En el archivo .env.example se encuentran todas las variables globales necesaria
 
 _Se pueden ejecutar pruebas de todas las funcionalidades con los distintos endpoint desarrollados en el proyecto_
 
+* **Para hacer pruebas con permisos de administrador utilize admin@admin como email de usuario y 123 como contraseña**
+
 ### Postman 🔩
 
 _Para poder realizar pruebas en Postman se deberan revisar los router donde se encuentran las distintas rutas del proyecto_
