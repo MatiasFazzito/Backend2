@@ -4,6 +4,7 @@ import passport from "passport"
 
 const router = Router()
 
+//Registro de usuarios
 router.post("/register", passport.authenticate("register", { failureRedirect: "/api/session/failregister" }), async (req, res) => {
     res.redirect("/login")
 })
@@ -12,6 +13,7 @@ router.get("/failregister", async (req, res) => {
     res.render("error", { error: "Error en el registro de usuario" })
 })
 
+//Login local
 router.post("/login", passport.authenticate("login", { failureRedirect: "/api/session/faillogin" }), async (req, res) => {
     if (!req.user) {
         return res.status(400).send({ status: "error", error: "Invalid credentials" })
@@ -31,6 +33,7 @@ router.get("/faillogin", (req, res) => {
     res.render("error", { error: "Error en el inicio de sesion" })
 })
 
+//Login github
 router.get("/github", passport.authenticate("github", { scope: ["user:email"] }), async (req, res) => { })
 
 router.get("/githubcallback", passport.authenticate("github", { failureRedirect: "/login" }), async (req, res) => {
@@ -44,6 +47,7 @@ router.get("/githubcallback", passport.authenticate("github", { failureRedirect:
     res.redirect("/home")
 })
 
+//Logout
 router.get("/logout", async (req, res) => {
     req.session.destroy(error => {
         if (!error) {
