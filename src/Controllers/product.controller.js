@@ -1,7 +1,7 @@
-import Product from "../reporitory/product.repository.js"
+import ProductRepository from "../reporitory/product.repository.js"
 import ProductDto from "../dao/DTOs/product.dto.js"
 
-const productService = new Product()
+const productService = new ProductRepository()
 
 export const createProduct = async (req, res) => {
     try {

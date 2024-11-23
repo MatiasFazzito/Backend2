@@ -2,7 +2,7 @@ import { DateTime } from "luxon"
 import TicketsModel from "../dao/mongo/models/ticket.model.js"
 
 
-export default class Ticket {
+export default class TicketRepository {
     createTicket = async (purchaser, products, amount) => {
         try {
 

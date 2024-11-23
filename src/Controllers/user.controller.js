@@ -1,7 +1,7 @@
-import User from "../reporitory/user.repository.js"
+import UserRepository from "../reporitory/user.repository.js"
 import UserDto from '../dao/DTOs/user.dto.js'
 
-const userService = new User()
+const userService = new UserRepository()
 
 export const getUsers = async (req, res) => {
     try {

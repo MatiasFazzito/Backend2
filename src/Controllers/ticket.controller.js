@@ -1,9 +1,9 @@
-import Ticket from "../reporitory/ticket.repository.js"
+import TicketRepository from "../reporitory/ticket.repository.js"
 import Cart from "../reporitory/cart.repository.js"
 import TicketDto from "../dao/DTOs/ticket.dto.js"
 import { transport } from "../utils.js"
 
-const ticketService = new Ticket()
+const ticketService = new TicketRepository()
 const cartService = new Cart()
 
 export const createTicket = async (req, res) => {

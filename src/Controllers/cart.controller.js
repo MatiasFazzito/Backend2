@@ -1,7 +1,7 @@
-import Cart from "../reporitory/cart.repository.js"
+import CartRepository from "../reporitory/cart.repository.js"
 import CartDto from "../dao/DTOs/cart.dto.js"
 
-const cartService = new Cart()
+const cartService = new CartRepository()
 
 export const getCart = async (req, res) => {
     try {

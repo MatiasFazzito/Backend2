@@ -1,6 +1,6 @@
 import UserModel from "../dao/mongo/models/user.model.js"
 
-export default class User {
+export default class UserRepository {
     getUsers = async () => {
         try {
             const users = await UserModel.find().lean()

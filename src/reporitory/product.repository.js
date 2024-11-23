@@ -1,7 +1,7 @@
 import ProductModel from "../dao/mongo/models/product.model.js"
 import CartModel from "../dao/mongo/models/cart.model.js"
 
-export default class Product {
+export default class ProductRepository {
     createProduct = async (body) => {
         try {
             const newProduct = await ProductModel.create(body)

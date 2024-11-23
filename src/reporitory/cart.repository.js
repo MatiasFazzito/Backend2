@@ -1,6 +1,6 @@
 import CartModel from "../dao/mongo/models/cart.model.js"
 
-export default class Cart {
+export default class CartRepository {
 
     getCartById = async (id) => {
         try {
