@@ -1,6 +1,6 @@
 # Matias Fazzito´s API
 
-_Check [README-es.md](https://github.com/MatiasFazzito/Backend2/blob/main/README.md) to see this in spanish_
+_Check [README-es.md](https://github.com/MatiasFazzito/Backend2/blob/main/README-es.md) to see this in spanish_
 
 _This is a project based on Backend II course from CODERHOUSE in continuation with previous courses and my profesional learning path to insert myself in the developing world, in this case with the lead of Prof. Omar Jesus Maniás @omanias and tutors Walter Maza & David Alvarez, the main objective is to deepen on the creation of an ecommerce aplying all the knowledge adquired on the previous course Backend I including Design patterns & architecture to the previous developed project_
 
