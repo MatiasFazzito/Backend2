@@ -85,7 +85,7 @@ Git was used for project version control, you can find all versions on github ve
 
 ## Authors ✒️
 
-* **Fazzito MAtias** - *Initial work and documenting* - [MatiasFazzito](https://github.com/MatiasFazzito)
+* **Fazzito Matias** - *Initial work and documenting* - [MatiasFazzito](https://github.com/MatiasFazzito)
 
 
 ## Greetings 🎁
