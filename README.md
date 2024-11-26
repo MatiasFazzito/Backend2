@@ -2,7 +2,7 @@
 
 _Check [README-es.md](https://github.com/MatiasFazzito/Backend2/blob/main/README-es.md) to see this in spanish_
 
-_This is a project based on Backend II course from CODERHOUSE in continuation with previous courses and my profesional learning path to insert myself in the developing world, in this case with the lead of Prof. Omar Jesus Maniás @omanias and tutors Walter Maza & David Alvarez, the main objective is to deepen on the creation of an ecommerce aplying all the knowledge adquired on the previous course Backend I including Design patterns & architecture to the previous developed project_
+_This is a project based on Backend III course from CODERHOUSE in continuation with previous courses and my profesional learning path to insert myself in the developing world, in this case with the lead of Prof. ___________ and tutors _________, the main objective is to deepen on the creation of an ecommerce aplying all the knowledge adquired on the previous courses Backend I and Backend II including ___________________ _
 
 ## Getting started 🚀
 
@@ -60,21 +60,6 @@ _A localhost server will be open on the port you indicated on the global variabl
 ### Dependencies 🛠️
 
 * [express](https://expressjs.com/es/) - Used framework
-* [express-handlebars](https://www.npmjs.com/package/express-handlebars) - View engine
-* [express-session](https://expressjs.com/en/resources/middleware/session.html) - Used to manage user sessions
-* [mongoose](https://mongoosejs.com/) - Used for persistence
-* [passport](https://www.passportjs.org/) - Used for authentication and authorization
-* [passport-github2](https://www.passportjs.org/packages/passport-github2/) - Used for github login and register
-* [passport-local](https://www.passportjs.org/packages/passport-local/) - Used for local user Login and Register
-* [passport-jwt](https://www.passportjs.org/packages/passport-jwt/) - Used for authorization
-* [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) - Used for authorization and authentication
-* [cookie-parser](https://www.npmjs.com/package/cookie-parser) - Used to generate and manage cookies
-* [connect-mongo](https://www.mongodb.com/es) - Used to connect with Mongo database
-* [bcrypt](https://www.npmjs.com/package/bcrypt) - Used to encrypt user password
-* [luxon](https://www.npmjs.com/package/luxon) - Used for time management on tickets
-* [method-override](https://www.npmjs.com/package/method-override) - Used for form management
-* [nodemailer](https://www.nodemailer.com/) - Used for mailing service
-* [cors](https://www.npmjs.com/package/cors) - Used to manage petitions
 
 
 ## Contributing 🖇️
